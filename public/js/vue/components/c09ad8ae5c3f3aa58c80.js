@@ -463,7 +463,7 @@
                   h.BH.apiUrl(`v1/auth/generateToken?set=${m.setId}`)
                 ).then(({ data: d }) => {
                   let b = atob(m.setIp.split("").reverse().join(""));
-                  window.location.href = `multibrick.legacy://client/${d.token}/${b}/${m.setPort}`;
+                  window.location.href = `mbrickplayer://${d.token}/${b}/${m.setPort}`;
                 });
               }
               function We() {
