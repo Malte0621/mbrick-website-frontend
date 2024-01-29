@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-<%= theme %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="https://www.multi-brick.com/favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play games, or just socialise with others!"
+    />
+    <meta name="csrf-token" content="<%= csrfToken %>" />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid  %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title>Create Reply - MultiBrick</title>
+    <meta name="og:title" content="Create Reply - MultiBrick" />
+    <link href="https://www.multi-brick.com/favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <dropdown
+      id="dropdown-v"
+      class="dropdown"
+      activator="username-bar"
+      contentclass="logout-dropdown"
+    >
+      <ul>
+        <li>
+          <a onclick="document.getElementById('logout').submit()">Logout</a>
+        </li>
+      </ul>
+      <form
+        method="POST"
+        action="https://www.multi-brick.com/logout"
+        id="logout"
+      >
+        <input type="hidden" name="_token" value="<%= csrfToken %>" />
+      </form>
+    </dropdown>
+    <div class="side-ad" id="100128-4">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=4"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=4"></script> -->
+    </div>
+    <div class="side-ad" style="right: 0" id="100128-20">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=20"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestformk.js?siteId=100128&formatId=20"></script> -->
+    </div>
+    <div class="main-holder grid">
+      <%- multibrickMessage %>
+      <%- alert %>
+
+      <notification id="notification-v" class="notification"></notification>
+      <div class="col-10-12 push-1-12">
+        <div class="col-8-12">
+          <div class="card forum-links inline">
+            <div class="content">
+              <div class="inline">
+                <a href="/rules">Rules</a>
+                <span class="divide"></span>
+                <div class="inline">
+                  <a href="/forum/bookmarks">Bookmarked </a>
+                </div>
+                <a href="/forum/my_posts">My Posts</a>
+                <a href="/forum/drafts">Drafts</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-10-12 push-1-12">
+        <div class="forum-bar weight600" style="padding: 10px 5px 10px 0">
+          <a href="/q/">Forum</a>
+          <i
+            class="fa fa-angle-double-right"
+            style="font-size: 1rem"
+            aria-hidden="true"
+          ></i>
+          <a href="/forum/<%= subforumid %>/"><%= subforumname %></a>
+          <i
+            class="fa fa-angle-double-right"
+            style="font-size: 1rem"
+            aria-hidden="true"
+          ></i>
+          <a href="/forum/thread/<%= postid %>/">
+            <span class="weight700 very-bold">
+              <%= title %>
+            </span>
+          </a>
+        </div>
+        <div class="card">
+          <div class="top blue"><% if (edit) { %>Edit a Reply to <%= title %><% } else { %>Reply to <%= title %><% } %></div>
+          <div class="content">
+            <%- quote %>
+            <form action="<% if (edit) { %>https://www.multi-brick.com/forum/edit/reply/<%= postid %>/<%= replyid %><% } %>" method="POST" id="post-form">
+              <input type="hidden" name="_token" value="<%= csrfToken %>" />
+              <textarea
+                id="body"
+                name="body"
+                placeholder="Body (max 1,000 characters)"
+                style="
+                  width: 100%;
+                  min-height: 200px;
+                  font-size: 16px;
+                  box-sizing: border-box;
+                  margin-top: 10px;
+                "
+                required
+              ><%- body %></textarea>
+              <div style="text-align: center">
+                <% if (edit) { %>
+                <button type="submit" class="button small-text blue">
+                  Edit Reply
+                </button>
+                <% } else { %>
+                <button type="submit" class="button small-text blue">
+                  Create Reply
+                </button>
+                <% } %>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-10-12 push-1-12">
+        <div style="text-align: center; margin-top: 20px; padding-bottom: 25px">
+          <div id="100128-28">
+            <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=28"></script> -->
+            <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=28"></script> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

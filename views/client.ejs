@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-<%= theme %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="https://www.multi-brick.com/favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta name="csrf-token" content="<%= csrfToken %>" />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid  %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title>Download - MultiBrick</title>
+    <meta name="og:title" content="Download - MultiBrick" />
+    <link href="https://www.multi-brick.com/favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <dropdown
+      id="dropdown-v"
+      class="dropdown"
+      activator="username-bar"
+      contentclass="logout-dropdown"
+    >
+      <ul>
+        <li>
+          <a onclick="document.getElementById('logout').submit()">Logout</a>
+        </li>
+      </ul>
+      <form
+        method="POST"
+        action="https://www.multi-brick.com/logout"
+        id="logout"
+      >
+        <input type="hidden" name="_token" value="<%= csrfToken %>" />
+      </form>
+    </dropdown>
+    <style>
+      body,
+      html {
+        background-color: #3c3c3c !important;
+      }
+    </style>
+    <div class="download-page">
+      <div class="main-holder grid holder legacy">
+        <%- multibrickMessage %>
+
+        <div style="margin-bottom: 10px">
+          <div class="large-text bold">CLIENT</div>
+          <a href="#" id="download-client" class="download" style="width: 100%">
+            <button class="orange">
+              <h1 style="margin: 0.6em 0.8em">Download</h1>
+            </button>
+            <div class="small-text dark-gray-text">V<%= clientVersion %>, 250MB</div>
+          </a>
+        </div>
+        <div style="margin-bottom: 10px">
+          <div class="large-text bold">EDITOR</div>
+          <a
+            href="#"
+            id="download-editor"
+            class="download"
+            style="width: 100%"
+          >
+            <button class="orange">
+              <h1 style="margin: 0.6em 0.8em">Download</h1>
+            </button>
+            <div class="small-text dark-gray-text">V<%= editorVersion %>, 65MB</div>
+          </a>
+        </div>
+        <a
+          href="https://www.multi-brick.com/node-hill-mbrickplayer"
+          class="download"
+          style="margin-top: 30px"
+        >
+          <div class="large-text bold">SERVER</div>
+          <button class="nh-button">
+            <h1 style="margin: 0.6em 0.8em">Download</h1>
+          </button>
+          <div class="small-text dark-gray-text">V<%= serverVersion %>, 2.15MB</div>
+        </a>
+        <div class="no-mobile splash shuttle"></div>
+      </div>
+      <script>
+        function detectOS() {
+          let userAgent = window.navigator.userAgent,
+            platform = window.navigator.platform,
+            macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"],
+            windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"],
+            iosPlatforms = ["iPhone", "iPad", "iPod"],
+            os = null;
+
+          if (macosPlatforms.indexOf(platform) !== -1) {
+            os = "Mac OS";
+          } else if (iosPlatforms.indexOf(platform) !== -1) {
+            os = "iOS";
+          } else if (windowsPlatforms.indexOf(platform) !== -1) {
+            os = "Windows";
+          } else if (/Android/.test(userAgent)) {
+            os = "Android";
+          } else if (!os && /Linux/.test(platform)) {
+            os = "Linux";
+          }
+
+          return os;
+        }
+
+        const downloadClient = document.getElementById("download-client");
+        const downloadEditor = document.getElementById("download-editor");
+
+        const os = detectOS();
+
+        switch (os) {
+          // TODO: Launchers for all platforms.
+          case "Mac OS":
+            downloadClient.href =
+              "https://www.multi-brick.com/downloads/archive/files/mac/client.zip";
+            downloadEditor.href =
+              "https://www.multi-brick.com/downloads/archive/files/mac/editor.zip";
+            break;
+          case "Windows":
+            downloadClient.href =
+              "https://www.multi-brick.com/downloads/archive/files/windows/MBrickLauncher.exe";
+            downloadEditor.href =
+              "https://www.multi-brick.com/downloads/archive/files/windows/x64/editor.zip";
+            break;
+          case "Linux":
+            downloadClient.href =
+              "https://www.multi-brick.com/downloads/archive/files/linux/x64/client.zip";
+            downloadEditor.href =
+              "https://www.multi-brick.com/downloads/archive/files/linux/x64/editor.zip";
+            break;
+          case "Android":
+            downloadClient.href =
+              "https://www.multi-brick.com/downloads/archive/files/android/client.apk";
+            downloadEditor.href = "#";
+            downloadEditor.onclick = function () {
+              alert("The editor is not available on Android.");
+            };
+            break;
+          default:
+            downloadClient.href =
+              "https://www.multi-brick.com/downloads/archive/files/windows/MBrickLauncher.exe";
+            downloadEditor.href =
+              "https://www.multi-brick.com/downloads/archive/files/windows/x64/editor.zip";
+            break;
+        }
+      </script>
+      <!-- <div class="holder experimental">
+        <div class="main-holder grid">
+          <div class="col-1-2">
+            <div class="large-text bold">EXPERIMENTAL BUILD</div>
+            If you want to try something new, the beta release of the next Brick
+            Hill Workshop is now open to public testers! Keep scrolling to find
+            out more about what's been packed into this build, or dive into it
+            right now by paying for access below.
+            <br /><br />
+            Rest assured; all of what you spend on beta access goes directly
+            back into funding the development of the client and workshop.
+            <br /><br />
+            If you can't afford beta access - don't worry! The finished game
+            will be completely free to play in the future.
+          </div>
+          <div class="tile2"></div>
+          <div class="mobile-col-1-2" style="float: none">
+            <div class="tile4"></div>
+          </div>
+          <download-client
+            id="downloadclient-v"
+            latest="0.0.9-beta"
+            :authed="<% if (userid) { %>true<% } else { %>false<% } %>"
+            :has-bought="false"
+          ></download-client>
+        </div>
+      </div>
+      <div class="holder blogs">
+        <div class="main-holder grid">
+          <div style="margin-bottom: 125px">
+            <div class="workshop-brick"></div>
+            <div class="brick-text">
+              <div class="bold inline" style="font-size: 1.7em">
+                Workshop Tester Brick
+              </div>
+              <div>
+                To say thanks for helping us test the beta builds of the new
+                client, you'll also receive the Workshop Beta Brick for your
+                avatar!
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="detailed-info">
+              <div class="performance-upgrades"></div>
+              <div class="bottom-text">
+                <div class="medium-text bold mb2">Performance Upgrades</div>
+                <div class="small-text mb1">
+                  You'll no longer be limited by lag when building with
+                  thousands of bricks!
+                </div>
+                <div class="creator smaller-text">stanfordlucy.brk</div>
+              </div>
+            </div>
+            <div class="detailed-info">
+              <div class="mats-surfaces"></div>
+              <div class="bottom-text">
+                <div class="medium-text bold mb2">Materials and Surfaces</div>
+                <div class="small-text mb1">
+                  Play around with diverse new mediums when creating your maps.
+                </div>
+                <div class="creator smaller-text">
+                  Arctic Research Complex by
+                  <a href="https://www.multi-brick.com/user/484" target="_blank"
+                    >rowbot</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="detailed-info">
+              <div class="intuitive-controls"></div>
+              <div class="bottom-text">
+                <div class="medium-text bold mb2">Intuitive Controls</div>
+                <div class="small-text mb1">
+                  Work in a smooth workshop with controls tailored for the best
+                  experience.
+                </div>
+                <div class="creator smaller-text">ufocrash.brk</div>
+              </div>
+            </div>
+            <div class="detailed-info">
+              <div class="new-envs"></div>
+              <div class="bottom-text">
+                <div class="medium-text bold mb2">New Environments</div>
+                <div class="small-text mb1">
+                  Tailor everything you make with revamped environment features!
+                </div>
+                <div class="creator smaller-text">
+                  spacebuilder's Keep by
+                  <a
+                    href="https://www.multi-brick.com/user/41209"
+                    target="_blank"
+                    >Illusionism</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="detailed-info">
+              <div class="dynamic-lighting"></div>
+              <div class="bottom-text">
+                <div class="medium-text bold mb2">Dynamic Lighting</div>
+                <div class="small-text mb1">
+                  Control the aesthetic you desire with ambience and light
+                  sources.
+                </div>
+                <div class="creator smaller-text">Mushroom Caves</div>
+              </div>
+            </div>
+            <div class="detailed-info">
+              <div class="ongoing-dev"></div>
+              <div class="bottom-text">
+                <div class="medium-text bold mb2">Ongoing Development</div>
+                <div class="small-text mb1">
+                  By becoming a tester, you'll influence how we shape the beta
+                  build's development.
+                </div>
+                <div class="creator smaller-text">
+                  Pirate Ship by
+                  <a href="https://www.multi-brick.com/user/2" target="_blank"
+                    >spacebuilder</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <a href="https://blog.multi-brick.com/tag/new-client/">
+              <div>Want to stay updated? We've got you covered.</div>
+              <div>
+                Find all blog posts related to the upcoming client's development
+                here.
+              </div>
+            </a>
+          </div>
+        </div>
+      </div> -->
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

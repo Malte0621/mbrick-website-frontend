@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-<%= theme %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="https://www.multi-brick.com/favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content="<%= csrfToken %>"
+    />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid  %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title>Forum - MultiBrick</title>
+    <meta name="og:title" content="Forum - MultiBrick" />
+    <link href="https://www.multi-brick.com/favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <dropdown
+      id="dropdown-v"
+      class="dropdown"
+      activator="username-bar"
+      contentclass="logout-dropdown"
+    >
+      <ul>
+        <li>
+          <a onclick="document.getElementById('logout').submit()">Logout</a>
+        </li>
+      </ul>
+      <form
+        method="POST"
+        action="https://www.multi-brick.com/logout"
+        id="logout"
+      >
+        <input
+          type="hidden"
+          name="_token"
+          value="<%= csrfToken %>"
+        />
+      </form>
+    </dropdown>
+    <div class="side-ad" id="100128-4">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=4"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=4"></script> -->
+    </div>
+    <div class="side-ad" style="right: 0" id="100128-20">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=20"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=20"></script> -->
+    </div>
+    <div class="main-holder grid">
+      <notification id="notification-v" class="notification"></notification>
+      <div class="col-8-12">
+        <div class="card forum-links inline">
+          <div class="content">
+            <div class="inline">
+              <a href="/rules">Rules</a>
+              <span class="divide"></span>
+              <div class="inline">
+                <a href="/forum/bookmarks">Bookmarked </a>
+              </div>
+              <a href="/forum/my_posts">My Posts</a>
+              <a href="/forum/drafts">Drafts</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-8-12">
+        <div class="card">
+          <div class="top blue">
+            <div class="col-7-12">MultiBrick</div>
+            <div class="no-mobile overflow-auto topic text-center">
+              <div class="col-3-12 stat">Threads</div>
+              <div class="col-3-12 stat">Replies</div>
+              <div class="col-6-12"></div>
+            </div>
+          </div>
+          <div class="content">
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div>
+                  <a class="label dark" href="/forum/1">MultiBrick Hub</a>
+                </div>
+                <span class="label small"
+                  >Talk about all things relating to MultiBrick.</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">257216</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">1271488</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739771/" class="label dark"
+                    >State of bh</a
+                  ><br />
+                  <span class="label small">7 hours ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div><a class="label dark" href="/forum/3">Marketplace</a></div>
+                <span class="label small"
+                  >Discuss trading, clothes and special items here!</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">144204</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">335084</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739692/" class="label dark"
+                    >selling brick value mustard for 60 bucks</a
+                  ><br />
+                  <span class="label small">1 day ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div>
+                  <a class="label dark" href="/forum/4">Clan Discussion</a>
+                </div>
+                <span class="label small"
+                  >Recruit, battle and talk about your clans.</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">10665</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">29992</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739110/" class="label dark"
+                    >free 20 bucks if join clan discord</a
+                  ><br />
+                  <span class="label small">1 week ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div><a class="label dark" href="/forum/5">Support</a></div>
+                <span class="label small"
+                  >Looking for help? Ask here and someone might help!</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">6492</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">30607</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739362/" class="label dark">......</a
+                  ><br />
+                  <span class="label small">1 week ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div><a class="label dark" href="/forum/8">Suggestions</a></div>
+                <span class="label small"
+                  >Want to make a suggestion? Post here and gather
+                  support!</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">11205</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">44870</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739488/" class="label dark"
+                    >Windows xp</a
+                  ><br />
+                  <span class="label small">1 week ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="top green">
+            <div class="col-7-12">Random</div>
+            <div class="no-mobile overflow-auto topic text-center">
+              <div class="col-3-12 stat">Threads</div>
+              <div class="col-3-12 stat">Replies</div>
+              <div class="col-6-12"></div>
+            </div>
+          </div>
+          <div class="content">
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div><a class="label dark" href="/forum/2">Off Topic</a></div>
+                <span class="label small"
+                  >This board is for posts unrelated to any other.</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">1975431</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">8478928</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739770/" class="label dark"
+                    >ok im back</a
+                  ><br />
+                  <span class="label small">7 hours ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div><a class="label dark" href="/forum/7">Game Talk</a></div>
+                <span class="label small"
+                  >Discuss various video sets unrelated to MultiBrick.</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">8692</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">32383</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739350/" class="label dark"
+                    >Demo of a small project of mine:</a
+                  ><br />
+                  <span class="label small">2 days ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div>
+                  <a class="label dark" href="/forum/9">Media Discussion</a>
+                </div>
+                <span class="label small"
+                  >Here you can discuss music, videos, movies, and much
+                  more!</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">5453</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">15252</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739382/" class="label dark"
+                    >random twitter memes</a
+                  ><br />
+                  <span class="label small">1 week ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div>
+                  <a class="label dark" href="/forum/10">Forum Games</a>
+                </div>
+                <span class="label small"
+                  >Participate with others in these forum-specific sets.</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">4431</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">38619</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739113/" class="label dark"
+                    >play this game</a
+                  ><br />
+                  <span class="label small">2 weeks ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div><a class="label dark" href="/forum/11">Creativity</a></div>
+                <span class="label small"
+                  >Show off your many talents in this board!</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">2761</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">11559</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739163/" class="label dark"
+                    >Huge update to the project I have been working on:</a
+                  ><br />
+                  <span class="label small">2 weeks ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="top orange">
+            <div class="col-7-12">Workshop</div>
+            <div class="no-mobile overflow-auto topic text-center">
+              <div class="col-3-12 stat">Threads</div>
+              <div class="col-3-12 stat">Replies</div>
+              <div class="col-6-12"></div>
+            </div>
+          </div>
+          <div class="content">
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div><a class="label dark" href="/forum/12">Creations</a></div>
+                <span class="label small"
+                  >Share or present your finished sets to other users.</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">1781</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">5213</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739107/" class="label dark"
+                    >this took me 3 hours to make!!</a
+                  ><br />
+                  <span class="label small">2 weeks ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div><a class="label dark" href="/forum/13">Building</a></div>
+                <span class="label small"
+                  >Looking for help? Have a work in progress project? Post
+                  here!</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">1101</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">3681</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739114/" class="label dark"
+                    >i like hanging out with children</a
+                  ><br />
+                  <span class="label small">2 weeks ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="board-info mb1">
+              <div class="col-7-12 board">
+                <div><a class="label dark" href="/forum/14">Scripting</a></div>
+                <span class="label small"
+                  >If you&#039;re a beginner in scripting, this board will
+                  surely help you out.</span
+                >
+              </div>
+              <div
+                class="no-mobile overflow-auto board ellipsis"
+                style="overflow: hidden"
+              >
+                <div class="col-3-12 stat">
+                  <span class="title">1647</span>
+                </div>
+                <div class="col-3-12 stat">
+                  <span class="title">5818</span>
+                </div>
+                <div
+                  class="col-6-12 text-right ellipsis pt2"
+                  style="max-width: 180px"
+                >
+                  <a href="/forum/thread/2739115/" class="label dark"
+                    >im bricked up</a
+                  ><br />
+                  <span class="label small">2 weeks ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4-12">
+        <div class="card">
+          <div class="top">Recent Topics</div>
+          <div class="content">
+            <div class="thread">
+              <div class="col-10-12 ellipsis">
+                <div class="ellipsis mb1">
+                  <a class="label dark" href="/forum/thread/2739771/"
+                    >State of bh</a
+                  >
+                </div>
+                <div class="label small ellipsis">
+                  by
+                  <a href="/user/117336/" class="dark-gray-text">Tartan</a> in
+                  <a class="dark-gray-text" href="/forum/1/">MultiBrick Hub</a>
+                </div>
+              </div>
+              <div class="col-2-12">
+                <div class="forum-tag">1</div>
+              </div>
+            </div>
+            <hr />
+            <div class="thread">
+              <div class="col-10-12 ellipsis">
+                <div class="ellipsis mb1">
+                  <a class="label dark" href="/forum/thread/2739770/"
+                    >ok im back</a
+                  >
+                </div>
+                <div class="label small ellipsis">
+                  by
+                  <a href="/user/21581/" class="dark-gray-text"
+                    >adios friends we had fun</a
+                  >
+                  in <a class="dark-gray-text" href="/forum/2/">Off Topic</a>
+                </div>
+              </div>
+              <div class="col-2-12">
+                <div class="forum-tag">3</div>
+              </div>
+            </div>
+            <hr />
+            <div class="thread">
+              <div class="col-10-12 ellipsis">
+                <div class="ellipsis mb1">
+                  <a class="label dark" href="/forum/thread/2739769/"
+                    >bdnsagjjldsrbjkaejkekjeatjl</a
+                  >
+                </div>
+                <div class="label small ellipsis">
+                  by
+                  <a href="/user/922913/" class="dark-gray-text">Macaronesia</a>
+                  in <a class="dark-gray-text" href="/forum/2/">Off Topic</a>
+                </div>
+              </div>
+              <div class="col-2-12">
+                <div class="forum-tag">0</div>
+              </div>
+            </div>
+            <hr />
+            <div class="thread">
+              <div class="col-10-12 ellipsis">
+                <div class="ellipsis mb1">
+                  <a class="label dark" href="/forum/thread/2739768/"
+                    >i miss want a sprite cranberry</a
+                  >
+                </div>
+                <div class="label small ellipsis">
+                  by
+                  <a href="/user/1032128/" class="dark-gray-text"
+                    >IWantDeletedUsername</a
+                  >
+                  in <a class="dark-gray-text" href="/forum/2/">Off Topic</a>
+                </div>
+              </div>
+              <div class="col-2-12">
+                <div class="forum-tag">7</div>
+              </div>
+            </div>
+            <hr />
+            <div class="thread">
+              <div class="col-10-12 ellipsis">
+                <div class="ellipsis mb1">
+                  <a class="label dark" href="/forum/thread/2739767/"
+                    >KUP BACK</a
+                  >
+                </div>
+                <div class="label small ellipsis">
+                  by
+                  <a href="/user/1032128/" class="dark-gray-text"
+                    >IWantDeletedUsername</a
+                  >
+                  in <a class="dark-gray-text" href="/forum/2/">Off Topic</a>
+                </div>
+              </div>
+              <div class="col-2-12">
+                <div class="forum-tag">5</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="top">Popular Topics</div>
+          <div class="content">
+            <div class="thread">
+              <div class="col-10-12 ellipsis">
+                <div class="ellipsis mb1">
+                  <a class="label dark" href="/forum/thread/2739768/"
+                    >i miss want a sprite cranberry</a
+                  >
+                </div>
+                <div class="label small ellipsis">
+                  by
+                  <a href="/user/1032128/" class="dark-gray-text"
+                    >IWantDeletedUsername</a
+                  >
+                  in <a class="dark-gray-text" href="/forum/2/">Off Topic</a>
+                </div>
+              </div>
+              <div class="col-2-12">
+                <div class="forum-tag">7</div>
+              </div>
+            </div>
+            <hr />
+            <div class="thread">
+              <div class="col-10-12 ellipsis">
+                <div class="ellipsis mb1">
+                  <a class="label dark" href="/forum/thread/2739755/"
+                    >Do not trust Casenn</a
+                  >
+                </div>
+                <div class="label small ellipsis">
+                  by
+                  <a href="/user/1032128/" class="dark-gray-text"
+                    >IWantDeletedUsername</a
+                  >
+                  in <a class="dark-gray-text" href="/forum/2/">Off Topic</a>
+                </div>
+              </div>
+              <div class="col-2-12">
+                <div class="forum-tag">5</div>
+              </div>
+            </div>
+            <hr />
+            <div class="thread">
+              <div class="col-10-12 ellipsis">
+                <div class="ellipsis mb1">
+                  <a class="label dark" href="/forum/thread/2739762/"
+                    >how about the spam guy</a
+                  >
+                </div>
+                <div class="label small ellipsis">
+                  by
+                  <a href="/user/832331/" class="dark-gray-text">trustemus</a>
+                  in <a class="dark-gray-text" href="/forum/2/">Off Topic</a>
+                </div>
+              </div>
+              <div class="col-2-12">
+                <div class="forum-tag">5</div>
+              </div>
+            </div>
+            <hr />
+            <div class="thread">
+              <div class="col-10-12 ellipsis">
+                <div class="ellipsis mb1">
+                  <a class="label dark" href="/forum/thread/2739767/"
+                    >KUP BACK</a
+                  >
+                </div>
+                <div class="label small ellipsis">
+                  by
+                  <a href="/user/1032128/" class="dark-gray-text"
+                    >IWantDeletedUsername</a
+                  >
+                  in <a class="dark-gray-text" href="/forum/2/">Off Topic</a>
+                </div>
+              </div>
+              <div class="col-2-12">
+                <div class="forum-tag">5</div>
+              </div>
+            </div>
+            <hr />
+            <div class="thread">
+              <div class="col-10-12 ellipsis">
+                <div class="ellipsis mb1">
+                  <a class="label dark" href="/forum/thread/2739749/"
+                    >FIRE ASF</a
+                  >
+                </div>
+                <div class="label small ellipsis">
+                  by
+                  <a href="/user/832331/" class="dark-gray-text">trustemus</a>
+                  in <a class="dark-gray-text" href="/forum/2/">Off Topic</a>
+                </div>
+              </div>
+              <div class="col-2-12">
+                <div class="forum-tag">4</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-10-12 push-1-12">
+        <div style="text-align: center; margin-top: 20px; padding-bottom: 25px">
+          <div id="100128-28">
+            <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=28"></script> -->
+            <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=28"></script> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

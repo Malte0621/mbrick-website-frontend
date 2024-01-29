@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-<%= theme %>">
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content="<%= csrfToken %>"
+    />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid  %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title>Privacy Policy - MultiBrick</title>
+    <meta name="og:title" content="Privacy Policy - MultiBrick" />
+    <link href="favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <div class="side-ad" id="100128-4">
+      <!-- <script src="https://ads.themoneytizer.com/s/gen728f?type=4"></script> -->
+      <!-- <script src="https://ads.themoneytizer.com/s/requestformb880?siteId=100128&amp;formatId=4"></script> -->
+    </div>
+    <div class="side-ad" style="right: 0" id="100128-20">
+      <!-- <script src="https://ads.themoneytizer.com/s/gen1bc9?type=20"></script> -->
+      <!-- <script src="https://ads.themoneytizker.com/s/requestform88a4?siteId=100128&amp;formatId=20"></script> -->
+    </div>
+    <div class="main-holder grid">
+      <%- multibrickMessage %>
+
+      <notification id="notification-v" class="notification"></notification>
+      <style>
+        .card .content {
+          padding: 0 10px;
+        }
+        h5 {
+          margin: 5px;
+        }
+      </style>
+      <div class="col-10-12 push-1-12">
+        <div class="large-text margin-bottom">Privacy Policy</div>
+        <div class="card">
+          <div class="top blue">General</div>
+          <div class="content">
+            <p>
+              This privacy policy regards the website
+              <a href="index">multi-brick.com</a> and all associated
+              subdomains.
+            </p>
+            <p>
+              Any questions regarding this policy may be directed to
+              <a href="mailto:help@multi-brick.com">help@multi-brick.com</a>.
+            </p>
+            <p>
+              Staff reserve the right to change or adapt this policy at any time
+              for any reason.<br />
+              We care for your privacy; if you question our practices, please
+              email
+              <a href="mailto:help@multi-brick.com">help@multi-brick.com</a>.
+            </p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="top blue">Requested Information</div>
+          <div class="content">
+            <p>
+              Users may view our content anonymously as a guest, though may be
+              restricted from some features. This is due to the lack of control
+              we have over moderating an anonymous account.
+            </p>
+            <p>
+              We do not share any information with third-parties for non
+              statistical purposes.
+            </p>
+            <p>
+              It is required that users choose a safe password that is not easy
+              to guess or crack. As well as this, all passwords are stored in an
+              encrypted form and cannot be accessed by anyone.
+            </p>
+            <p>
+              Upon signing up to MultiBrick, we require you supply a valid email
+              address. This both verifies your account and enables more user
+              security.
+            </p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="top blue">Stored Information</div>
+          <div class="content">
+            <p>
+              Non-personally identifiable information is automatically collected
+              when visiting <a href="index">multi-brick.com</a>.
+            </p>
+            <p>
+              MultiBrick may use scripts, cookies and other methods for
+              monitering activity on our website in order to better administrate
+              and control certain actions.
+            </p>
+            <p>
+              Your IP address, browser type and date/time may be stored, though
+              do not obtain any personally indentifiable information.
+            </p>
+            <p>
+              All passwords are encrypted, and hence the original password
+              cannot be retrieved by any parties.
+            </p>
+            <p>
+              MultiBrick will not attempt to obtain your location through a
+              device or application. If your location is ever requested, it will
+              not be shared with third-parties and would be optional.
+            </p>
+            <p>
+              For security purposes, all actions performed by users are logged
+              and may be used for support. These logs may consist of your IP
+              address, requested pages, browser type, date/time, and operating
+              system.
+            </p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="top blue">Shared Information</div>
+          <div class="content">
+            <p>
+              MultiBrick will only share personal information in ways specified
+              in this privacy policy; we do not sell any personal information to
+              third-party companies.
+            </p>
+            <p>
+              MultiBrick reserves the right to share personally identifiable
+              information required by law to protect the rights of our website
+              or to comply with a court order.
+            </p>
+            <p>
+              To the extent permitted by applicable law, MultiBrick may also
+              share personally identifiable information with law enforcement or
+              other agencies if the concealment of such material may risk the
+              safety of both the party involved or our website.
+            </p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="top blue">Updating Information</div>
+          <div class="content">
+            <p>
+              You may change or request the removal of any personally
+              identifiable information stored by MultiBrick either on your
+              account settings page or by emailing
+              <a href="mailto:help@multi-brick.com">help@multi-brick.com</a>
+            </p>
+            <p>
+              MultiBrick will hold all information associated with your account
+              for as long as it is required in providing you our services.<br />
+              Your information will be used to settle disputes when needed for
+              legal obligations and to enforce our policies.
+            </p>
+          </div>
+        </div>
+        <h5>Effective Date: 11/04/2017</h5>
+        <h5>Last Updated: 11/04/2017</h5>
+      </div>
+      <div class="col-10-12 push-1-12">
+        <div style="text-align: center; margin-top: 20px; padding-bottom: 25px">
+          <div id="100128-28">
+            <!-- <script src="https://ads.themoneytizer.com/s/gen9747?type=28"></script> -->
+            <!-- <script src="https://ads.themoneytizer.com/s/requestform9970?siteId=100128&amp;formatId=28"></script> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

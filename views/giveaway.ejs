@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="https://www.multi-brick.com/favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content="tph7o60jndhXwkcwNYgCi3NmU2vvRY7ahvjyUkqG"
+    />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title>Lottery - MultiBrick</title>
+    <meta name="og:title" content="Lottery - MultiBrick" />
+    <link href="https://www.multi-brick.com/favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <dropdown
+      id="dropdown-v"
+      class="dropdown"
+      activator="username-bar"
+      contentclass="logout-dropdown"
+    >
+      <ul>
+        <li>
+          <a onclick="document.getElementById('logout').submit()">Logout</a>
+        </li>
+      </ul>
+      <form
+        method="POST"
+        action="https://www.multi-brick.com/logout"
+        id="logout"
+      >
+        <input
+          type="hidden"
+          name="_token"
+          value="tph7o60jndhXwkcwNYgCi3NmU2vvRY7ahvjyUkqG"
+        />
+      </form>
+    </dropdown>
+    <div class="main-holder grid">
+      <%- multibrickMessage %>
+
+      <notification id="notification-v" class="notification"></notification>
+      <div class="col-10-12 push-1-12">
+        <div class="card">
+          <div class="top green">Membership Giveaway</div>
+          <div class="content center-text">
+            <div class="small-text">
+              If you currently have an active membership, then you're
+              automatically entered into this giveaway! The pool is determined
+              by how many users have an active membership, and what membership
+              type that is. At the end of each month, four random winners will
+              be chosen from those with membership.
+            </div>
+            <hr />
+            <div>
+              <div class="large-text bucks-text very-bold"><%= total %> Bucks</div>
+              <div class="small-text gray-text">Current pool size</div>
+              <div class="small-text gray-text">
+                <b><%= per %></b> Bucks to be distributed to <b><%= users %></b> winners.
+              </div>
+            </div>
+            <% if (previousWinners) { %>
+            <hr>
+            <div class="lottery-winners">
+              <%- previousWinners %>
+            </div>
+            <% } %>
+            <hr />
+            <div class="medium-text very-bold">
+              <countdown
+                id="countdown-v"
+                class="countdown"
+                :reload="true"
+                countdown-to="<%= timestamp %>"
+              ></countdown>
+            </div>
+            <div class="small-text darker-gray-text">
+              until the winners are drawn
+            </div>
+            <% if (!userid || membership <= 0) { %>
+            <a href="/membership">
+              <button class="lottery-button white-text plain flat">
+                <div class="smedium-text">ENTER GIVEAWAY</div>
+              </button>
+            </a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-<%= theme %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="https://www.multi-brick.com/favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content="<%= csrfToken %>"
+    />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid  %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title>Search - MultiBrick</title>
+    <meta name="og:title" content="Search - MultiBrick" />
+    <link href="https://www.multi-brick.com/favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <dropdown
+      id="dropdown-v"
+      class="dropdown"
+      activator="username-bar"
+      contentclass="logout-dropdown"
+    >
+      <ul>
+        <li>
+          <a onclick="document.getElementById('logout').submit()">Logout</a>
+        </li>
+      </ul>
+      <form
+        method="POST"
+        action="https://www.multi-brick.com/logout"
+        id="logout"
+      >
+        <input
+          type="hidden"
+          name="_token"
+          value="<%= csrfToken %>"
+        />
+      </form>
+    </dropdown>
+    <div class="side-ad" id="100128-4">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=4"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=4"></script> -->
+    </div>
+    <div class="side-ad" style="right: 0" id="100128-20">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=20"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=20"></script> -->
+    </div>
+    <div class="main-holder grid">
+      <%- multibrickMessage %>
+
+      <notification id="notification-v" class="notification"></notification>
+      <div class="col-10-12 push-1-12 new-theme">
+        <div>
+          <div class="content">
+            <div class="header mb-10">Search Users</div>
+            <div
+              class="col-1-1 mb-20"
+              style="text-align: center; padding-right: 0"
+            >
+              <div
+                class="flex flex-horiz-center mobile-column"
+                style="width: 100%"
+              >
+                <input
+                  style="margin-right: 5px"
+                  class="width-100 mb-10-mobile input rigid"
+                  type="text"
+                  placeholder="Search users"
+                  autocomplete="off"
+                  value="<%= search %>"
+                />
+                <div class="flex flex-horiz-center" style="margin-left: 5px">
+                  <button style="height: 100%" class="blue shop-search-button">
+                    SEARCH
+                  </button>
+                  <a
+                    href="/searchonline"
+                    class="button bold green"
+                    style="margin-left: 10px"
+                    >ONLINE</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-1-1 mb-10" style="padding-right: 0">
+              <%- users %>
+            </div>
+            <div class="pages" style="margin-top: 20px">
+              <% if (cursor > 0) { %>
+              <a
+                class="button blue small"
+                style="margin-left: 5px"
+                href="/search/?cursor=<%= cursor - 25 %>"
+              >
+                <i class="fas fa-chevron-left"></i>
+              </a>
+              <% } %>
+              <% if (cursor + limit < count) { %>
+              <a
+                class="button blue small"
+                style="margin-left: 5px"
+                href="/search/?cursor=<%= cursor + 25 %>"
+              >
+                <i class="fas fa-chevron-right"></i>
+              </a>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <script>
+          $(document).on("click", ".blue.shop-search-button", searchUsers);
+          $(document).on("keyup", ".input.rigid", searchUsers);
+
+          function searchUsers(e) {
+            if (
+              $(e.target).hasClass("shop-search-button") ||
+              event.keyCode == 13
+            ) {
+              let search = $(".input.rigid").val();
+              window.location = `/search/${search}`;
+            }
+          }
+        </script>
+      </div>
+      <div class="col-10-12 push-1-12">
+        <div style="text-align: center; margin-top: 20px; padding-bottom: 25px">
+          <div id="100128-28">
+            <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=28"></script> -->
+            <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=28"></script> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

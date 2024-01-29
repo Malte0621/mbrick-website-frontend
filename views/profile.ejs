@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-<%= theme %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="https://www.multi-brick.com/favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content="<%= csrfToken %>"
+    />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid  %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title><%= username2 %> - MultiBrick</title>
+    <meta name="og:title" content="<%= username2 %> - MultiBrick" />
+    <link href="https://www.multi-brick.com/favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <dropdown
+      id="dropdown-v"
+      class="dropdown"
+      activator="username-bar"
+      contentclass="logout-dropdown"
+    >
+      <ul>
+        <li>
+          <a onclick="document.getElementById('logout').submit()">Logout</a>
+        </li>
+      </ul>
+      <form
+        method="POST"
+        action="https://www.multi-brick.com/logout"
+        id="logout"
+      >
+        <input
+          type="hidden"
+          name="_token"
+          value="<%= csrfToken %>"
+        />
+      </form>
+    </dropdown>
+    <div class="side-ad" id="100128-4">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=4"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=4"></script> -->
+    </div>
+    <div class="side-ad" style="right: 0" id="100128-20">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=20"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=20"></script> -->
+    </div>
+    <div class="main-holder grid">
+      <%- multibrickMessage %>
+      <%- message2 %>
+
+      <notification id="notification-v" class="notification"></notification>
+      <div class="col-10-12 push-1-12">
+        <% if (banned) { %>
+        <div class="alert error">
+          User is banned
+        </div>
+        <% } %>
+        <% if (status != "") { %>
+        <div class="col-1-1" style="padding-right: 0">
+          <div class="card">
+            <div
+              class="content"
+              style="
+                border-radius: 5px;
+                position: relative;
+                word-break: break-word;
+              "
+            >
+              <div class="small-text very-bold light-gray-text">
+                What's on my mind:
+              </div>
+              <%= status %>
+            </div>
+          </div>
+        </div>
+        <% } %>
+        <div class="col-6-12">
+          <div class="card">
+            <div class="content text-center bold medium-text relative ellipsis">
+              <span class="status-dot <% if (onlineStatus) { %>online<%} %>"></span>
+              <% if (signatureid2 != 0) { %>
+              <a href="/clan/<%= signatureid2 %>"><span class="mr1" style="color:#999999;">[<%= signature2 %>]</span></a>
+              <% } %>
+              <span class="ellipsis"><%= username2 %></span>
+              <br />
+              <img
+                src="https://api.multi-brick.com/v1/thumbnails/single?type=1&amp;id=<%= userid2 %>"
+                style="height: 350px"
+              />
+              <div class="user-description-box closed">
+                <div class="toggle-user-desc gray-text">
+                  <div
+                    class="user-desc p2 darker-grey-text"
+                    style="font-size: 16px; line-height: 17px"
+                  >
+                  <%= description2 %>
+                  <% if (pastUsernames2.length > 0) { %>
+                  <hr>
+                  <p></p>
+                  Previously known as: 
+                  <i><%= pastUsernames2.join(", ") %></i>
+                  <% } %>
+                  </div>
+                  <a
+                    class="darker-grey-text read-more-desc"
+                    style="font-size: 16px"
+                    >Read More</a
+                  >
+                </div>
+              </div>
+              <profile-dropdown
+                id="profiledropdown-v"
+                :for_user="<%= userid2 %>"
+              ></profile-dropdown>
+              <% if (userid2 != userid) { %>
+              <div style="text-align:center;">
+                <a class="button small blue inline" style="font-size:14px;" href="https://www.multi-brick.com/message/<%= userid2 %>/send">MESSAGE</a>
+                <a class="button small blue inline" href="https://www.multi-brick.com/trade/create/<%= userid2 %>" style="font-size:14px;">TRADE</a>
+                <a class="button small inline <% if (areFriends || areFriendsPending) { %>red<% } else { %>blue<% } %>" style="font-size:14px;" onclick="$('.friend-form').submit();"><% if (areFriends) { %>REMOVE FRIEND<% } else if (areFriendsPending) { %>CANCEL FRIEND<% } else if (areFriendsPending2) { %>ACCEPT FRIEND<% } else { %>FRIEND<% } %></a>
+                <form method="POST" action="https://www.multi-brick.com/friends" class="friend-form">
+                <input type="hidden" name="_token" value="<%= csrfToken %>"> <input type="hidden" name="userId" value="<%= userid2 %>">
+                <input type="hidden" name="sender" value="profile">
+                <input type="hidden" name="type" value="<% if (areFriends) { %>remove<% } else if (areFriendsPending) { %>cancel<% } else if (areFriendsPending2) { %>accept<% } else { %>add<% } %>">
+                </form>
+              </div>
+              <% } %>
+              <% if (role == "mod" || role == "admin" || role == "owner") { %>
+              <div class="text-center">
+                <a href="http://www.multi-brick.com/admin/users/view/<%= userid2 %>" class="button small red inline" style="font-size:14px;" target="_blank">INFO</a>
+                <% if (userid2 != userid) { %>
+                <a href="http://www.multi-brick.com/admin/users/ban/<%= userid2 %>" class="button small red inline" style="font-size:14px;" target="_blank">BAN</a>
+                <% } %>
+              </div>
+              <% } %>
+            </div>
+          </div>
+          <% if (awards != "") { %>
+          <div class="card">
+            <div class="top green">Awards</div>
+            <div class="content" style="text-align: center">
+              <%- awards %>
+            </div>
+          </div>
+          <% } %>
+        </div>
+        <div class="col-6-12" style="padding-right: 0">
+          <sets
+            id="sets-v"
+            user_id="<%= userid2 %>"
+            class="set-slider"
+            style="position: relative"
+          ></sets>
+          <div id="100128-19">
+            <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=19"></script> -->
+            <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=19"></script> -->
+          </div>
+        </div>
+        <div class="col-1-1 tab-buttons">
+          <button class="tab-button blue" data-tab="1">CRATE</button>
+          <button class="tab-button transparent" data-tab="2">SOCIAL</button>
+          <button class="tab-button transparent" data-tab="3">STATS</button>
+        </div>
+        <div class="col-1-1" id="tabs">
+          <div class="button-tabs">
+            <div class="button-tab active" data-tab="1">
+              <div class="col-1-1">
+                <div class="card">
+                  <div class="top red">Crate</div>
+                  <div class="content">
+                    <crate id="crate-v" user="<%= userid2 %>"></crate>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="button-tab" data-tab="2">
+              <div class="row" style="padding-right: 0.1px">
+                <div class="col-6-12">
+                  <div class="card">
+                    <div class="top orange" style="position: relative">
+                      Clans
+                      <a
+                        class="button orange"
+                        href="/user/<%= userid2 %>/clans"
+                        style="
+                          position: absolute;
+                          right: 5px;
+                          top: 4px;
+                          padding: 5px;
+                        "
+                        >SEE ALL</a
+                      >
+                    </div>
+                    <div
+                      class="content"
+                      style="text-align: center; min-height: 330.86px"
+                    >
+                      <%- clans %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6-12">
+                  <div class="card">
+                    <div class="top red" style="position: relative">
+                      Friends
+                      <a
+                        class="button red"
+                        href="/user/<%= userid2 %>/friends/1"
+                        style="
+                          position: absolute;
+                          right: 5px;
+                          top: 4px;
+                          padding: 5px;
+                        "
+                        >SEE ALL</a
+                      >
+                    </div>
+                    <div
+                      class="content"
+                      style="text-align: center; min-height: 330.86px"
+                    >
+                      <%- friends %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="button-tab" data-tab="3">
+              <div class="col-1-1">
+                <div class="card">
+                  <div class="top red">Statistics</div>
+                  <div class="content" style="min-height: 330.86px">
+                    <table class="stats-table">
+                      <tr>
+                        <td>
+                          <b>Join Date:</b>
+                        </td>
+                        <td id="join-date"><%= created2 %></td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Last Online:</b>
+                        </td>
+                        <td id="last-online"><%= lastOnline2 %></td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Game Visits:</b>
+                        </td>
+                        <td id="game-visits"><%= placeVisits2 %></td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Forum Posts:</b>
+                        </td>
+                        <td id="forum-posts"><%= forumPosts2 %></td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Friends:</b>
+                        </td>
+                        <td id="friends"><%= friends2 %></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        if ($(".user-description-box .user-desc").height() <= 80) {
+          $(".read-more-desc").css("display", "none");
+          $(".toggle-user-desc").addClass("open");
+        }
+        $(document).on("click", ".read-more-desc", function () {
+          $(this).parent().parent().toggleClass("closed");
+          if ($(this).text() == "Read More") {
+            $(this).text("Show Less");
+            $(".user-description-box .content").css(
+              "min-height",
+              $(".user-description-box .content").height() + 33
+            );
+          } else {
+            $(this).text("Read More");
+            $(".user-description-box .content").css(
+              "min-height",
+              $(".user-description-box .content").height() - 33
+            );
+          }
+        });
+      </script>
+      <div class="col-10-12 push-1-12">
+        <div style="text-align: center; margin-top: 20px; padding-bottom: 25px">
+          <div id="100128-28">
+            <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=28"></script> -->
+            <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=28"></script> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

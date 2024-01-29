@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-<%= theme %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="https://www.multi-brick.com/favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content="<%= csrfToken %>"
+    />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid  %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title>Dashboard - MultiBrick</title>
+    <meta name="og:title" content="Dashboard - MultiBrick" />
+    <link href="https://www.multi-brick.com/favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <dropdown
+      id="dropdown-v"
+      class="dropdown"
+      activator="username-bar"
+      contentclass="logout-dropdown"
+    >
+      <ul>
+        <li>
+          <a onclick="document.getElementById('logout').submit()">Logout</a>
+        </li>
+      </ul>
+      <form
+        method="POST"
+        action="https://www.multi-brick.com/logout"
+        id="logout"
+      >
+        <input
+          type="hidden"
+          name="_token"
+          value="<%= csrfToken %>"
+        />
+      </form>
+    </dropdown>
+    <div class="side-ad" id="100128-4">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=4"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=4"></script> -->
+    </div>
+    <div class="side-ad" style="right: 0" id="100128-20">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=20"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=20"></script> -->
+    </div>
+    <div class="main-holder grid">
+      <%- multibrickMessage %>
+      <%- message2 %>
+    
+      <notification id="notification-v" class="notification"></notification>
+      <div class="new-theme dashboard">
+        <div class="col-3-10">
+          <div class="card border-bottom no-rounded no-shadow">
+            <div class="rounded center-text">
+              <img
+                class="avatar-thumbnail"
+                src="https://api.multi-brick.com/v1/thumbnails/single?type=1&amp;id=<%= userid %>"
+                style="width: 100%"
+              />
+              <% if (clanid) { %>
+              <a href="/clan/<%= clanid %>"><span class="bold medium-text light-text">[<%= clantag %>]</span></a>
+              <% } %>
+              <span style="margin: 5px" class="bold medium-text"
+                ><%= username %></span
+              >
+              <div class="dashboard-info flex flex-column flex-items-center">
+                <div class="flex dash-info vmargin-6">
+                  <% if (membership > 0) { %>
+                  <div class="flex streak-info ml-20">
+                    <svg-sprite id="svgsprite-v" svg="user/dashboard/<% if (membership == 1) { %>mint<% } else if (membership == 2) { %>ace<% } else if (membership == 3) { %>royal<% } %>_streak_col" square="23" class="svgsprite mr-10"></svg-sprite>
+                    <p class="smedium-text"><%= membershipStreak %></p>
+                  </div>
+                  <% } %>
+                  <div
+                    class="flex streak-info dash-info ml-20 mr-10 flex-items-center"
+                  >
+                    <svg-sprite
+                      id="svgsprite-v"
+                      svg="user/trade/value/value"
+                      square="23"
+                      class="svgsprite svg-black mr-10"
+                    ></svg-sprite>
+                    <p class="smedium-text mr-20" title="<%= accountValue %>"><%= accountValueFormatted %></p>
+                    <svg-sprite
+                      id="svgsprite-v"
+                      svg="user/trade/arrow_value_<% if (accountValueChange > 0) { %>up<% } else { %>down<% } %>"
+                      square="15"
+                      class="svgsprite ml-10 value-svg"
+                    ></svg-sprite>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="flex flex-items-center flex-horiz-center">
+              <p class="very-bold smedium-text mr-10"><%= friendCount %></p>
+              <p class="bold small-text gray-text">FRIENDS</p>
+            </div>
+          </div>
+          <div class="card no-rounded no-shadow">
+            <%- friends %>
+            
+            <% if (friendCount > 0) { %>
+            <a class="small-text bold" href="/user/<%= userid %>/friends/1"
+              >VIEW ALL</a
+            >
+            <% } %>
+          </div>
+        </div>
+        <div class="col-8-12">
+          <blog-card id="blogcard-v" class="blogcard"></blog-card>
+          <div class="card border-bottom no-shadow no-rounded">
+            <div class="smedium-text mb-16 bold">What's New?</div>
+            <div>
+              <form
+                style="width: 100%"
+                class="pb3"
+                method="POST"
+                action="https://www.multi-brick.com/status"
+              >
+                <input
+                  type="hidden"
+                  name="_token"
+                  value="<%= csrfToken %>"
+                />
+                <div class="flex flex-column">
+                  <textarea
+                    class="post-input border mb-16"
+                    name="status"
+                    placeholder="Right now I'm..."
+                    type="text"
+                  ></textarea>
+                  <button class="post-button button small smaller-text blue">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="card no-shadow">
+            <div class="smedium-text mb-16 bold">Your Feed</div>
+            <div>
+              <%- feed %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-10-12 push-1-12">
+        <div style="text-align: center; margin-top: 20px; padding-bottom: 25px">
+          <div id="100128-28">
+            <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=28"></script> -->
+            <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=28"></script> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

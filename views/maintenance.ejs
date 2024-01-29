@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-default">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="https://www.multi-brick.com/favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content=""
+    />
+    <meta
+      name="user-data"
+      data-authenticated="false"
+    />
+    <title>Maintenance - MultiBrick</title>
+    <meta name="og:title" content="Maintenance - MultiBrick" />
+    <link href="https://www.multi-brick.com/favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/f7b9da036e5df9411266.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <nav>
+      <div class="primary">
+          <div class="grid">
+          <div class="push-left">
+              <ul>
+              <li>
+                  <a href="/play/"> Play </a>
+              </li>
+              <li>
+                  <a href="/shop/"> Shop </a>
+              </li>
+              <li>
+                  <a href="/clans/"> Clans </a>
+              </li>
+              <li>
+                  <a href="/search/"> Users </a>
+              </li>
+              <li>
+                  <a href="/forum/"> Forum </a>
+              </li>
+              <li>
+                  <a href="/membership/"> Membership </a>
+              </li>
+              </ul>
+          </div>
+          <div class="nav-user push-right" id="info">
+              <div class="username login-buttons">
+              <a href="/login" class="login-button">Login</a>
+              <a href="/register" class="register-button">Register</a>
+              </div>
+          </div>
+          </div>
+      </div>
+      </nav>
+    <dropdown
+      id="dropdown-v"
+      class="dropdown"
+      activator="username-bar"
+      contentclass="logout-dropdown"
+    >
+      <ul>
+        <li>
+          <a onclick="document.getElementById('logout').submit()">Logout</a>
+        </li>
+      </ul>
+      <form
+        method="POST"
+        action="https://www.multi-brick.com/logout"
+        id="logout"
+      >
+        <input
+          type="hidden"
+          name="_token"
+          value=""
+        />
+      </form>
+    </dropdown>
+    <div class="side-ad" id="100128-4">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=4"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=4"></script> -->
+    </div>
+    <div class="side-ad" style="right: 0" id="100128-20">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=20"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=20"></script> -->
+    </div>
+    <div class="main-holder grid">
+      <notification id="notification-v" class="notification"></notification>
+      <div style="text-align: center; padding-top: 50px">
+        <div style="font-weight: 600; font-size: 3rem">
+          MultiBrick is currently under maintenance.
+        </div>
+        <div style="font-weight: 500; font-size: 2rem">
+          Please try again soon.
+        </div>
+        <!-- <div style="font-size: 2rem">
+          <a
+            href="https://discord.gg/brick-hill"
+            >Join us on Discord at discord.gg/brick-hill</a
+          >
+        </div> -->
+        <form action="/maintenance" id="maintenance" method="POST" style="margin-top: 20px">
+          <input
+            type="password"
+            name="maint_key"
+            placeholder="Maintenance Key"
+          />
+          <div style="padding: 2.5px"></div>
+          <button
+            type="button"
+            class="blue"
+            onclick="document.getElementById('maintenance').submit()"
+          >
+            SUBMIT
+          </button>
+        </form>
+      </div>
+      <script>
+        // refresh page after a minute to check if its no longer in maintenance
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000 * 60);
+      </script>
+      <div class="col-10-12 push-1-12">
+        <div style="text-align: center; margin-top: 20px; padding-bottom: 25px">
+          <div id="100128-28">
+            <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=28"></script> -->
+            <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=28"></script> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

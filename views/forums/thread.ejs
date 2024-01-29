@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-<%= theme %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="https://www.multi-brick.com/favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content="<%= csrfToken %>"
+    />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid  %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title><%= title %> - MultiBrick</title>
+    <meta name="og:title" content="<%= title %> - MultiBrick" />
+    <link href="https://www.multi-brick.com/favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <dropdown
+      id="dropdown-v"
+      class="dropdown"
+      activator="username-bar"
+      contentclass="logout-dropdown"
+    >
+      <ul>
+        <li>
+          <a onclick="document.getElementById('logout').submit()">Logout</a>
+        </li>
+      </ul>
+      <form
+        method="POST"
+        action="https://www.multi-brick.com/logout"
+        id="logout"
+      >
+        <input
+          type="hidden"
+          name="_token"
+          value="<%= csrfToken %>"
+        />
+      </form>
+    </dropdown>
+    <div class="side-ad" id="100128-4">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=4"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=4"></script> -->
+    </div>
+    <div class="side-ad" style="right: 0" id="100128-20">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=20"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=20"></script> -->
+    </div>
+    <div class="main-holder grid">
+      <%- multibrickMessage %>
+    
+      <notification id="notification-v" class="notification"></notification>
+      <div class="col-10-12 push-1-12">
+        <div class="col-8-12">
+          <div class="card forum-links inline">
+            <div class="content">
+              <div class="inline">
+                <a href="/rules">Rules</a>
+                <span class="divide"></span>
+                <div class="inline">
+                  <a href="/forum/bookmarks">Bookmarked </a>
+                </div>
+                <a href="/forum/my_posts">My Posts</a>
+                <a href="/forum/drafts">Drafts</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-10-12 push-1-12">
+        <div class="forum-bar mb2 ellipsis">
+          <div class="inline mt2">
+            <a href="/forum/">Forum</a>
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <a href="/forum/<%= subforumid %>/"> <%= subforumname %> </a>
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            <a href="/forum/thread/<%= postid %>/">
+              <span class="very-bold"> <%= title %> </span>
+            </a>
+          </div>
+          <div class="push-right">
+            <a class="button small <%= subforumcolor %>" href="/forum/1/create/">CREATE</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="top <%= subforumcolor %>">
+            <% if (pinned2) { %>
+            <span class="thread-label <%= subforumcolor %>">Pinned</span>
+            <% } %>
+            <% if (locked2) { %>
+            <span class="thread-label <%= subforumcolor %>">Locked</span>
+            <% } %>
+            <%= title %>
+            <div style="float: right">
+              <form
+                method="POST"
+                action="https://www.multi-brick.com/forum/<%= postid %>/bookmark"
+                id="bookmark-submit"
+              >
+                <input
+                  type="hidden"
+                  name="_token"
+                  value="<%= csrfToken %>"
+                />
+                <label class="hover-cursor" for="bookmarkSubmit"
+                  ><i class="far fa-bookmark"></i
+                ></label>
+                <input
+                  type="submit"
+                  id="bookmarkSubmit"
+                  style="display: none"
+                />
+              </form>
+            </div>
+          </div>
+          <div class="content">
+            <div class="thread-row" style="position: relative<% if (deleted2) { %>; opacity: 0.5<% } %>">
+              <div class="overflow-auto">
+                <div class="col-3-12 center-text ellipsis">
+                  <a href="/user/<%= posterid %>/">
+                    <img
+                      src="https://api.multi-brick.com/v1/thumbnails/single?type=1&amp;id=<%= posterid %>"
+                      style="width: 150px"
+                    />
+                  </a>
+                  <br />
+                  <% if (postersignatureid) { %>
+                  <a href="/clan/<%= postersignatureid %>/" class="light-gray-text">[<%= postersignature %>]</a>
+                  <% } %>
+                  <a href="/user/<%= posterid %>/"> <%= postername %> </a>
+                  <br />
+                  <span class="light-gray-text"> Joined <%= posterjoined %> </span>
+                  <br />
+                  <span class="light-gray-text"> Posts <%= posterposts %> </span>
+                  <%- postertitle %>
+                </div>
+                <div class="col-9-12">
+                  <div
+                    class="weight600 light-gray-text text-right mobile-center-text"
+                    style="text-align: right"
+                  >
+                    <%= postcreated %>
+                  </div>
+                  <div class="p">
+                    <%- postcontent %>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-1-1 weight600 dark-grey-text forum-options"
+                style="text-align: right"
+                data-post-id="<%= postid %>"
+              >
+                <a class="forum-reply mr4" href="/forum/reply/<%= postid %>/"
+                  >REPLY</a
+                >
+                <a class="report" href="/report/forumthread/<%= postid %>/">REPORT</a>
+              </div>
+              <% if (role == "mod" || role == "admin" || role == "head_admin" || role == "owner") { %>
+              <div class="col-1-1 weight600 dark-grey-text forum-options"> 
+                <a class="report mr4" href="https://www.multi-brick.com/forum/moderate/thread/<% if (deleted2) { %>undelete<% } else { %>delete<% } %>/<%= postid %>"><% if (deleted2) { %>UNDELETE<% } else { %>DELETE<% } %></a>
+                <a class="report mr4" href="https://www.multi-brick.com/forum/edit/thread/<%= postid %>">EDIT</a>
+                <a class="report mr4" href="https://www.multi-brick.com/forum/moderate/thread/<% if (pinned2) { %>unpin<% } else { %>pin<% } %>/<%= postid %>"><% if (pinned2) { %>UNPIN<% } else { %>PIN<% } %></a>
+                <a class="report mr4" href="https://www.multi-brick.com/forum/moderate/thread/<% if (locked2) { %>unlock<% } else { %>lock<% } %>/<%= postid %>"><% if (locked2) { %>UNLOCK<% } else { %>LOCK<% } %></a>
+              </div>
+              <% } %>
+            </div>
+            <hr />
+            <%- replies %>
+          </div>
+        </div>
+        <div class="center-text">
+          <div class="pages mb2">
+            <a class="page active" href="/forum/thread/<%= postid %>/1">1</a>
+          </div>
+          <a class="button <% if (locked2 && (role != 'mod' && role != 'admin' && role != 'owner')) { %> no-click<% } else { %><%= subforumcolor %><%} %>" <% if (!locked2 || (role == "mod" || role == "admin" || role == "head_admin" ||role == "owner")) { %>href="/forum/reply/<%= postid %>/"<% } %>>REPLY</a>
+        </div>
+      </div>
+      <div class="col-10-12 push-1-12">
+        <div style="text-align: center; margin-top: 20px; padding-bottom: 25px">
+          <div id="100128-28">
+            <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=28"></script> -->
+            <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=28"></script> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

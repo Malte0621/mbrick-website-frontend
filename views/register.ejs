@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-<%= theme %>">
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content="<%= csrfToken %>"
+    />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid  %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title>Register - MultiBrick</title>
+    <meta name="og:title" content="Register - MultiBrick" />
+    <link href="favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <!-- <script src="https://hcaptcha.com/1/api.js" async defer></script> -->
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <div class="main-holder grid">
+      <%- multibrickMessage %>
+
+      <notification id="notification-v" class="notification"></notification>
+      <% if (typeof error !== 'undefined') { %>
+        <div class="col-10-12 push-1-12">
+          <div class="alert error">
+            <%= error %>
+          </div>
+        </div>
+      <% } %>
+      <style>
+        h3 {
+          margin: 2px 0;
+        }
+        h6 {
+          margin: 2px 0;
+          font-size: 12px;
+        }
+        input:not([type="radio"]) {
+          display: block;
+          margin-bottom: 5px;
+        }
+        .genders {
+          margin-bottom: 5px;
+        }
+        input[type="radio" i] {
+          margin: 3px 3px 0 0;
+        }
+        label {
+          margin-right: 5px;
+        }
+      </style>
+      <div class="col-10-12 push-1-12">
+        <div class="card">
+          <div class="top blue">Register</div>
+          <div class="content">
+            <div class="col-8-12">
+              <form method="POST" action="https://www.multi-brick.com/register">
+                <input
+                  type="hidden"
+                  name="_token"
+                  value="<%= csrfToken %>"
+                />
+                <h3 class="dark-gray-text">Username</h3>
+                <h6 class="light-gray-text">How will people recognize you?</h6>
+                <input
+                  id="username"
+                  type="username"
+                  name="username"
+                  minlength="3"
+                  maxlength="25"
+                  value
+                  placeholder="Username"
+                  required
+                  autofocus
+                />
+                <h3 class="dark-gray-text">Password</h3>
+                <h6 class="light-gray-text">Only you will know this!</h6>
+                <input
+                  id="password"
+                  minlength="6"
+                  max="200"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value
+                  required
+                />
+                <input
+                  id="password_confirmation"
+                  type="password"
+                  name="password_confirmation"
+                  placeholder="Confirm Password"
+                  value
+                  required
+                />
+                <% if (inviteKeyRequired) { %>
+                <h3 class="dark-gray-text">Invite Key</h3>
+                <h6 class="light-gray-text">The site currently invite-only.</h6>
+                <input
+                  id="inviteKey"
+                  type="password"
+                  name="inviteKey"
+                  placeholder="Invite Key"
+                  value
+                  required
+                />
+                <% } %>
+                <h3 class="dark-gray-text">Email</h3>
+                <h6 class="light-gray-text">
+                  This must be valid so we can contact you!
+                </h6>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Email (optional)"
+                  value
+                />
+                <!-- <div class="col-1-1" style="margin-top: 5px">
+                  <div
+                    class="h-captcha"
+                    data-sitekey="8af8210e-53ce-46e9-971f-66ec41629448"
+                  ></div>
+                </div> -->
+                <div class="col-1-1" style="margin-top: 5px">
+                  <iframe src="https://www.multi-brick.com/mcaptcha/gen"
+                    width="324" height="98" role="presentation" name="mcaptcha" frameborder="0" scrolling="no" style="width: 324px; height: 98px; border-style: none;" allowfullscreen></iframe>
+                </div>
+                <div class="col-1-1">
+                  <div style="padding-top: 5px"></div>
+                  <button type="submit" class="blue">Register</button>
+                </div>
+                <div class="col-1-1">
+                  <span class="gray-text" style="font-size: 14px"
+                    >By signing up to MultiBrick, you confirm that you have read
+                    and agree to the
+                    <a
+                      class="dark-gray-text bold"
+                      href="terms"
+                      target="_blank"
+                      >Terms of Service</a
+                    >, as well as our
+                    <a
+                      class="dark-gray-text bold"
+                      href="privacy"
+                      target="_blank"
+                      >Privacy Policy</a
+                    >.</span
+                  >
+                </div>
+              </form>
+            </div>
+            <div class="col-4-12" style="position: relative; min-height: 310px">
+              <div
+                class="col-12-12"
+                style="position: absolute; top: 5px; right: 5px"
+              >
+                <div
+                  style="
+                    border-radius: 5px;
+                    border: 1px solid #d9d9d9;
+                    padding: 5px;
+                  "
+                >
+                  <h3 class="dark-gray-text">Already have an account?</h3>
+                  <span class="light-gray-text" style="font-size: 15px"
+                    >If you've forgotten your password go to
+                    <a class="dark-gray-text bold" href="password/forgot"
+                      >forgot password</a
+                    >.<br /><br />To login, go to
+                    <a class="dark-gray-text bold" href="login">login</a
+                    >.<br /><br />Can't play? Go to
+                    <a class="dark-gray-text bold" href="download"
+                      >download</a
+                    >
+                    and install the client!</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        var password = $("#password");
+        var passconf = $("#password_confirmation");
+        var username = $("#username");
+
+        password.on("change", confPassword);
+        passconf.on("keyup", confPassword);
+        username.on("change", trimUsername);
+
+        function confPassword() {
+          if (password.val() !== passconf.val()) {
+            passconf[0].setCustomValidity("Passwords do not match.");
+          } else {
+            passconf[0].setCustomValidity("");
+          }
+        }
+
+        function trimUsername() {
+          if (username.val() !== username.val().trim()) {
+            username[0].setCustomValidity(
+              "Username cannot have spaces at the beginning or end."
+            );
+          } else {
+            username[0].setCustomValidity("");
+          }
+        }
+      </script>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

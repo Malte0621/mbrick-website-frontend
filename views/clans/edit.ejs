@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-<%= theme %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="https://www.multi-brick.com/favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content="<%= csrfToken %>"
+    />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid  %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title>Edit Clan - MultiBrick</title>
+    <meta name="og:title" content="Edit Clan - MultiBrick" />
+    <link href="https://www.multi-brick.com/favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <dropdown
+      id="dropdown-v"
+      class="dropdown"
+      activator="username-bar"
+      contentclass="logout-dropdown"
+    >
+      <ul>
+        <li>
+          <a onclick="document.getElementById('logout').submit()">Logout</a>
+        </li>
+      </ul>
+      <form
+        method="POST"
+        action="https://www.multi-brick.com/logout"
+        id="logout"
+      >
+        <input
+          type="hidden"
+          name="_token"
+          value="<%= csrfToken %>"
+        />
+      </form>
+    </dropdown>
+    <div class="side-ad" id="100128-4">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=4"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=4"></script> -->
+    </div>
+    <div class="side-ad" style="right: 0" id="100128-20">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=20"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=20"></script> -->
+    </div>
+    <div class="main-holder grid">
+      <%- multibrickMessage %>
+
+      <notification id="notification-v" class="notification"></notification>
+      <% if (message) { %>
+      <div class="col-10-12 push-1-12">
+        <div class="alert success">
+          <%= message %>
+        </div>
+      </div>
+      <% } %>
+      <div class="col-10-12 push-1-12">
+        <div class="tabs">
+          <meta name="clan_id" content="<%= clanid %>" />
+          <div class="tab active col-1-2" data-tab="1">Edit</div>
+          <div class="tab col-1-2" data-tab="2">Members & Relations</div>
+          <div class="tab-holder">
+            <div class="tab-body active" data-tab="1">
+              <div class="content p2">
+                <h1 style="font-size: 23px; margin-top: 0">Edit <%= clanname %></h1>
+                <div class="flex-container">
+                  <% if (rankObj.permissions.editClan) { %>
+                  <div class="clan-edit-icon clan-edit col-3-12">
+                    <div class="bold">Change Icon</div>
+                    <img
+                      src="<%= clanthumbnail %>"
+                      style="width: 150px; height: 150px"
+                    />
+                    <form
+                      method="POST"
+                      action="/clan/<%= clanid %>/thumbnail"
+                      enctype="multipart/form-data"
+                    >
+                      <input
+                        type="hidden"
+                        name="_token"
+                        value="<%= csrfToken %>"
+                      />
+                      <input
+                        class="upload-input"
+                        type="file"
+                        name="image"
+                        style="border: 0; padding-left: 0"
+                        required
+                      />
+                      <input
+                        class="button blue upload-submit"
+                        type="submit"
+                        value="UPLOAD"
+                      />
+                    </form>
+                  </div>
+                  <% } %>
+                  <% if (rankObj.permissions.editDesc) { %>
+                  <div class="clan-edit-description clan-edit col-9-12">
+                    <div class="bold">Update Description</div>
+                    <form
+                      method="POST"
+                      action="https://www.multi-brick.com/clan/edit"
+                      style="height: 65%"
+                    >
+                      <input
+                        type="hidden"
+                        name="_token"
+                        value="<%= csrfToken %>"
+                      />
+                      <input type="hidden" name="type" value="description" />
+                      <input type="hidden" name="clan_id" value="<%= clanid %>" />
+                      <textarea
+                        class="upload-input"
+                        name="description"
+                        style="width: 90%; height: 100%"
+                      >
+<%= clandescription %></textarea
+                      >
+                      <input
+                        class="button blue upload-submit"
+                        type="submit"
+                        value="SAVE"
+                      />
+                    </form>
+                  </div>
+                </div>
+                <% } %>
+                <% if (rankObj.permissions.editClan) { %>
+                <hr />
+                <div class="overflow-auto">
+                  <div class="bold">Join Type</div>
+                  <form
+                    method="POST"
+                    action="https://www.multi-brick.com/clan/edit"
+                  >
+                    <input
+                      type="hidden"
+                      name="_token"
+                      value="<%= csrfToken %>"
+                    />
+                    <input type="hidden" name="type" value="join_type" />
+                    <input type="hidden" name="clan_id" value="<%= clanid %>" />
+                    <select name="value" class="select">
+                      <option value="open" <% if (clanRequestType == 'open') { %>selected<% } %>>Open to all</option>
+                      <option value="request" <% if (clanRequestType == 'request') { %>selected<% } %>>Request to join</option>
+                    </select>
+                    <div></div>
+                    <input
+                      class="button blue upload-submit"
+                      type="submit"
+                      value="SAVE"
+                    />
+                  </form>
+                </div>
+                <% } %>
+                <% if (rankObj.permissions.changeRank) { %>
+                <hr />
+                <div class="clan-edit-ranks overflow-auto">
+                  <div class="bold">Edit Ranks</div>
+                  <form
+                    method="POST"
+                    action="https://www.multi-brick.com/clan/edit"
+                  >
+                    <input
+                      type="hidden"
+                      name="_token"
+                      value="<%= csrfToken %>"
+                    />
+                    <input type="hidden" name="type" value="edit_ranks" />
+                    <input type="hidden" name="clan_id" value="<%= clanid %>" />
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <h5>Power</h5>
+                          </td>
+                          <td>
+                            <h5>Name</h5>
+                          </td>
+                          <td>
+                            <h5 class="text-center">
+                              <i
+                                class="fa fa-info-circle"
+                                title="Let these users post to the wall"
+                              ></i>
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 class="text-center">
+                              <i
+                                class="fa fa-info-circle"
+                                title="Let these users moderate the wall"
+                              ></i>
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 class="text-center">
+                              <i
+                                class="fa fa-info-circle"
+                                title="Let these users invite/reject users"
+                              ></i>
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 class="text-center">
+                              <i
+                                class="fa fa-info-circle"
+                                title="Let these users ally/enemy other clans"
+                              ></i>
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 class="text-center">
+                              <i
+                                class="fa fa-info-circle"
+                                title="Let these users rank other users"
+                              ></i>
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 class="text-center">
+                              <i
+                                class="fa fa-info-circle"
+                                title="Let these users add/delete ranks"
+                              ></i>
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 class="text-center">
+                              <i
+                                class="fa fa-info-circle"
+                                title="Let these users edit the clan description"
+                              ></i>
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 class="text-center">
+                              <i
+                                class="fa fa-info-circle"
+                                title="Let these users use the shoutout box"
+                              ></i>
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 class="text-center">
+                              <i
+                                class="fa fa-info-circle"
+                                title="Let these users add funds to the clan"
+                              ></i>
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 class="text-center">
+                              <i
+                                class="fa fa-info-circle"
+                                title="Let these users take funds from the clan"
+                              ></i>
+                            </h5>
+                          </td>
+                          <td>
+                            <h5 class="text-center">
+                              <i
+                                class="fa fa-info-circle"
+                                title="Let these users edit the clan"
+                              ></i>
+                            </h5>
+                          </td>
+                        </tr>
+                        <%- ranks %>
+                      </tbody>
+                    </table>
+                    <input
+                      class="button blue upload-submit"
+                      type="submit"
+                      value="SAVE"
+                    />
+                  </form>
+                </div>
+                <% } %>
+                <% if (rankObj.permissions.addDelRank) { %>
+                <hr />
+                <div class="clan-new-rank clan-edit overflow-auto">
+                  <div class="bold">New Rank</div>
+                  <form
+                    method="POST"
+                    action="https://www.multi-brick.com/clan/edit"
+                  >
+                    <input
+                      type="hidden"
+                      name="_token"
+                      value="<%= csrfToken %>"
+                    />
+                    <input type="hidden" name="type" value="new_rank" />
+                    <input type="hidden" name="clan_id" value="<%= clanid %>" />
+                    <input
+                      type="text"
+                      name="new_rank_name"
+                      placeholder="Rank name"
+                    />
+                    <div class="bucks-text bold">
+                      This will cost <span class="bucks-icon"></span>6
+                    </div>
+                    <input
+                      class="button blue upload-submit"
+                      type="submit"
+                      value="CREATE"
+                      style="display: block"
+                    />
+                  </form>
+                </div>
+                <% } %>
+                <% if (userid == creatorid) { %>
+                <hr />
+                <div class="clan-change-owner overflow-auto clan-edit">
+                  <div class="bold">Ownership</div>
+                  <form
+                    method="POST"
+                    action="https://www.multi-brick.com/clan/edit"
+                  >
+                    <input
+                      type="hidden"
+                      name="_token"
+                      value="<%= csrfToken %>"
+                    />
+                    <input type="hidden" name="type" value="ownership" />
+                    <input type="hidden" name="clan_id" value="<%= clanid %>" />
+                    <input type="text" name="username" placeholder="Username" />
+                    <div class="red-text bold">
+                      User must be in clan to be given ownership
+                    </div>
+                    <input
+                      class="button blue upload-submit"
+                      type="submit"
+                      value="TRANSFER"
+                    />
+                  </form>
+                </div>
+                <hr />
+                <div class="clan-change-owner clan-edit">
+                  <div class="bold">Abandon</div>
+                  <form
+                    class="overflow-auto"
+                    method="POST"
+                    action="https://www.multi-brick.com/clan/edit"
+                  >
+                    <input
+                      type="hidden"
+                      name="_token"
+                      value="<%= csrfToken %>"
+                    />
+                    <input type="hidden" name="type" value="abandon" />
+                    <input type="hidden" name="clan_id" value="<%= clanid %>" />
+                    <input
+                      class="button red upload-submit"
+                      type="submit"
+                      value="ABANDON"
+                    />
+                  </form>
+                  <div class="red-text bold">THIS CANNOT BE UNDONE</div>
+                </div>
+                <% } %>
+              </div>
+            </div>
+            <div class="tab-body" data-tab="2">
+              <div class="p1">
+                <div class="content">
+                  <h1 style="font-size: 23px; margin-top: 0">
+                    Members & Relations
+                  </h1>
+                  <div class="clan-change-ranks clan-edit rank-select">
+                    <div class="bold">Members</div>
+                    <select
+                      class="select"
+                      style="width: 150px"
+                      id="member-rank"
+                      onchange="loadEditMembers()"
+                    >
+                      <option value="1">Member</option>
+                      <option value="75">Admin</option>
+                      <option value="100">Owner</option>
+                    </select>
+                    <div class="overflow-auto edit-holder unselectable"></div>
+                    <div class="pages unselectable"></div>
+                  </div>
+                  <script>
+                    $(document).on("change", "select[data-user]", function () {
+                      let select = $(this);
+                      let user = select.data("user");
+                      $.post(
+                        `https://www.multi-brick.com/clan/edit`,
+                        {
+                          _token: $('meta[name="csrf-token"]').attr("content"),
+                          user_id: user,
+                          clan_id: <%= clanid %>,
+                          type: "change_rank",
+                          new_rank: $(":selected", select).val(),
+                        },
+                        () => {
+                          loadEditMembers(
+                            $(".member-pages .forumPage.blue").text() || 1
+                          );
+                        }
+                      ).fail((data) => {
+                        $(".col-10-12.push-1-12").prepend(`
+                                        <div class="error-notification">
+                                            ${data.responseJSON.error}
+                                        </div>
+                                    `);
+                      });
+                    });
+                    $(document).on(
+                      "click",
+                      "#clan-search",
+                      searchRelationClans
+                    );
+                    $(document).on(
+                      "keyup",
+                      "#clan-search-bar",
+                      searchRelationClans
+                    );
+                    loadEditMembers();
+                  </script>
+                  <% if (pendingMembers != '') { %>
+                    <%- pendingMembers %>
+                    <hr />
+                  <% } %>
+                  <hr />
+                  <div class="clan-ally-enemy clan-edit">
+                    <div class="bold">Allies and Enemies</div>
+                    <input
+                      type="text"
+                      name="clan-search"
+                      placeholder="Search clans"
+                      id="clan-search-bar"
+                    />
+                    <button
+                      class="button small blue smaller-text small"
+                      id="clan-search"
+                    >
+                      SEARCH
+                    </button>
+                    <div class="relation-holder" style="padding-top: 5px"></div>
+                    <hr />
+                    <div class="bold">Pending Allies</div>
+                    <div class="pending-allies">You have no pending allies</div>
+                    <span style="font-weight: 600; display: block"
+                      >Pending enemies</span
+                    >
+                    <div class="pending-enemies">
+                      You have no pending enemies
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-10-12 push-1-12">
+        <div style="text-align: center; margin-top: 20px; padding-bottom: 25px">
+          <div id="100128-28">
+            <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=28"></script> -->
+            <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=28"></script> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

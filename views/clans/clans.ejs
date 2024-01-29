@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-<%= theme %>">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="https://www.multi-brick.com/favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content="<%= csrfToken %>"
+    />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid  %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title><%= clanname %> - MultiBrick</title>
+    <meta name="og:title" content="<%= clanname %> - MultiBrick" />
+    <link href="https://www.multi-brick.com/favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <dropdown
+      id="dropdown-v"
+      class="dropdown"
+      activator="username-bar"
+      contentclass="logout-dropdown"
+    >
+      <ul>
+        <li>
+          <a onclick="document.getElementById('logout').submit()">Logout</a>
+        </li>
+      </ul>
+      <form
+        method="POST"
+        action="https://www.multi-brick.com/logout"
+        id="logout"
+      >
+        <input
+          type="hidden"
+          name="_token"
+          value="<%= csrfToken %>"
+        />
+      </form>
+    </dropdown>
+    <div class="side-ad" id="100128-4">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=4"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=4"></script> -->
+    </div>
+    <div class="side-ad" style="right: 0" id="100128-20">
+      <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=20"></script> -->
+      <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=20"></script> -->
+    </div>
+    <div class="main-holder grid">
+      <%- multibrickMessage %>
+
+      <notification id="notification-v" class="notification"></notification>
+      <div class="col-10-12 push-1-12">
+        <div class="card">
+          <div class="top" style="position: relative">
+            <dropdown id="dropdown-v" class="dropdown" style="right: 7.5px">
+              <ul>
+                <% if (userid == creatorid) { %>
+                <li>
+                  <a href="/clan/<%= clanid %>/edit">Edit</a>
+                </li>
+                <% } %>
+                <li>
+                  <a href="/report/clan/<%= clanid %>/">Report</a>
+                </li>
+              </ul>
+            </dropdown>
+            <span class="clan-title"><%= clanname %></span> <b>[<%= clantag %>]</b>
+          </div>
+          <div class="content" style="position: relative">
+            <div class="col-3-12">
+              <div class="clan-img-holder mb1">
+                <img
+                  class="width-100"
+                  src="https://api.multi-brick.com/v1/thumbnails/single?type=4&id=<%= clanid %>"
+                />
+              </div>
+              <div class="dark-gray-text bold">
+                <div>
+                  Owned by
+                  <b>
+                    <a href="/user/<%= creatorid %>/" class="black-text"><%= creatorname %></a>
+                  </b>
+                </div>
+                <div><%= membercount %> Members</div>
+              </div>
+              <form
+                method="POST"
+                action="https://www.multi-brick.com/clan/<% if (rank != '') { %>leave<% } else { %>join<% } %>"
+                style="display: inline-block"
+              >
+                <input
+                  type="hidden"
+                  name="_token"
+                  value="<%= csrfToken %>"
+                />
+                <input type="hidden" name="clan_id" value="<%= clanid %>" />
+                <input type="hidden" name="type" value="<% if (rank != '') { %>leave<% } else { %>join<% } %>" />
+                <button class="red" style="font-size: 12px" type="submit">
+                  <% if (rank != '') { %>LEAVE<% } else { %>JOIN<% } %>
+                </button>
+              </form>
+              <% if (rank != '') { %>
+              <form
+                method="POST"
+                action="https://www.multi-brick.com/clan/primary"
+                class="inline"
+              >
+                <input
+                  type="hidden"
+                  name="_token"
+                  value="<%= csrfToken %>"
+                />
+                <input type="hidden" name="clan_id" value="<%= clanid %>" />
+                <button
+                  class="<% if (signature == clanid) { %>red<% } else { %>green<% } %>"
+                  style="
+                    font-size: 11px;
+                    width: 120px;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                  "
+                  type="submit"
+                >
+                  <% if (signature == clanid) { %>REMOVE PRIMARY<% } else { %>MAKE PRIMARY<% } %>
+                </button>
+              </form>
+              <% } %>
+            </div>
+            <div class="col-9-12">
+              <div class="clan-description darkest-gray-text bold">
+                <span
+                  ><%= description %></span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-1-1 tab-buttons">
+          <button class="tab-button blue w600" data-tab="1">MEMBERS</button>
+          <button class="tab-button transparent w600" data-tab="2">
+            RELATIONS
+          </button>
+        </div>
+        <div class="col-1-1">
+          <div class="button-tabs">
+            <div class="button-tab active" data-tab="1">
+              <div class="col-1-1">
+                <div class="card">
+                  <div class="top blue">Members</div>
+                  <div class="content" style="min-height: 250px">
+                    <div class="mb1 overflow-auto">
+                      <% if (rank != 'none') { %>
+                      <span class="dark-gray-text"
+                        >Your rank: <b class="black-text"><%= rank %></b></span
+                      >
+                      <% } %>
+                      <div
+                        class="rank-select"
+                        style="width: 150px; float: right"
+                      >
+                        <select class="push-right select">
+                          <%- ranks %>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        class="member-holder overflow-auto unselectable"
+                      ></div>
+                      <div class="member-pages pages blue unselectable"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="button-tab" data-tab="2">
+              <div class="col-1-1">
+                <div class="card">
+                  <div class="top">Relations</div>
+                  <div class="content">
+                    <div>
+                      <fieldset class="fieldset green mb1">
+                        <legend>Allies</legend>
+                        <div class="p1 overflow-auto">
+                          <%- allies %>
+                        </div>
+                      </fieldset>
+                      <fieldset class="fieldset red">
+                        <legend>Enemies</legend>
+                        <div class="p1 overflow-auto">
+                          <%- enemies %>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="button-tab" data-tab="3">
+              <div class="col-1-1">
+                <div class="card">
+                  <div class="top red">Store</div>
+                  <div class="content">Feature coming soon</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script>
+          function loadMembers(rank = "", page = 1) {
+            if (rank == "") rank = $(".rank-select option").first().val();
+            $.getJSON(`/api/clans/members/<%= clanid %>/${rank}/${page}`, (data) => {
+              $(".member-holder").html();
+              let html = "";
+              for (let i in data.data) {
+                let user = data.data[i].user;
+                html += `<a href="/user/${user.id}/">
+                                <div class="col-1-5 mobile-col-1-2">
+                                    <img style="width:145px;height:145px;" src="${BH.avatarImg(
+                                      user.id
+                                    )}">
+                                    <div class="ellipsis">${user.username}</div>
+                                </div>
+                            </a>`;
+              }
+              $(".member-pages").html();
+              let pagehtml = "";
+              for (let i of data.pages.pages) {
+                pagehtml += `<a class="page${
+                  i == page ? " active" : ""
+                }">${i}</a>`;
+              }
+              $(".member-pages").html(pagehtml);
+              $(".member-holder").html(html);
+            });
+          }
+          $(".rank-select select").on("change", (e) => {
+            loadMembers($("option:selected", e.target).val());
+          });
+          $(document).on("click", ".member-pages a", function () {
+            loadMembers(
+              $(".rank-select select option:selected").val(),
+              $(this).text()
+            );
+          });
+          loadMembers(1);
+        </script>
+      </div>
+      <div class="col-10-12 push-1-12">
+        <div style="text-align: center; margin-top: 20px; padding-bottom: 25px">
+          <div id="100128-28">
+            <!-- <script src="//ads.themoneytizer.com/s/gen.js?type=28"></script> -->
+            <!-- <script src="//ads.themoneytizer.com/s/requestform.js?siteId=100128&formatId=28"></script> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<% if (userid) { %>
+<nav>
+    <div class="primary">
+        <div class="grid">
+        <div class="push-left">
+            <ul>
+            <li>
+                <a href="/play/"> Play </a>
+            </li>
+            <li>
+                <a href="/shop/"> Shop </a>
+            </li>
+            <li>
+                <a href="/clans/"> Clans </a>
+            </li>
+            <li>
+                <a href="/search/"> Users </a>
+            </li>
+            <li>
+                <a href="/forum/"> Forum </a>
+            </li>
+            <li>
+                <a href="/membership/"> Membership </a>
+            </li>
+            <% if (role != 'none') { %>
+            <li>
+                <a href="/admin/"> Admin </a>
+            </li>
+            <% } %>
+            </ul>
+        </div>
+        <div class="nav-user push-right" id="info">
+            <div class="info">
+            <a href="/currency" class="header-data" title="<%= currency %>">
+                <span class="bucks-icon img-white"></span>
+                <%= currencyFormatted %>
+            </a>
+            <a href="/currency" class="header-data" title="<%= currency2 %>">
+                <span class="bits-icon img-white"></span>
+                <%= currency2Formatted %>
+            </a>
+            <a href="/messages" class="header-data">
+                <span class="messages-icon img-white"></span>
+                <%= unreadMessages %>
+            </a>
+            <a href="/friends" class="header-data">
+                <span class="friends-icon img-white"></span>
+                <%= pendingFriends %>
+            </a>
+            </div>
+            <div class="username ellipsis">
+            <div id="username-bar">
+                <div class="username-holder ellipsis inline unselectable">
+                <%= username %>
+                </div>
+                <i class="arrow-down img-white"></i>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="secondary">
+        <div class="grid">
+        <div class="bottom-bar">
+            <ul>
+            <li>
+                <a href="/dashboard/" id="pHome"> Home </a>
+            </li>
+            <li>
+                <a href="/settings/" id="pSettings"> Settings </a>
+            </li>
+            <li>
+                <a href="/customize/" id="pAvatar"> Avatar </a>
+            </li>
+            <li>
+                <a href="/user/<%= userid %>/" id="pProfile"> Profile </a>
+            </li>
+            <li>
+                <a href="/client/" id="pDownload"> Download </a>
+            </li>
+            <li>
+                <a href="/trades/" id="pTrades"> Trades <% if (pendingTrades != "0") { %><span class="nav-notif"><%= pendingTrades %></span><% } %> </a>
+            </li>
+            <li>
+                <a href="/sets/" id="pSets"> Sets </a>
+            </li>
+            <li>
+                <a href="/currency/" id="pCurrency"> Currency </a>
+            </li>
+            <li>
+                <a href="/blog/" id="pBlog"> Blog </a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</nav>
+<% } else { %>
+<nav>
+<div class="primary">
+    <div class="grid">
+    <div class="push-left">
+        <ul>
+        <li>
+            <a href="/play/"> Play </a>
+        </li>
+        <li>
+            <a href="/shop/"> Shop </a>
+        </li>
+        <li>
+            <a href="/clans/"> Clans </a>
+        </li>
+        <li>
+            <a href="/search/"> Users </a>
+        </li>
+        <li>
+            <a href="/forum/"> Forum </a>
+        </li>
+        <li>
+            <a href="/membership/"> Membership </a>
+        </li>
+        </ul>
+    </div>
+    <div class="nav-user push-right" id="info">
+        <div class="username login-buttons">
+        <a href="/login" class="login-button">Login</a>
+        <a href="/register" class="register-button">Register</a>
+        </div>
+    </div>
+    </div>
+</div>
+</nav>
+<% } %>

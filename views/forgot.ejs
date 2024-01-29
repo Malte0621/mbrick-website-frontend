@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="https://www.brick-hill.com/favicon.ico" />
+    <meta name="og:site_name" content="MultiBrick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play games, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content="<%= csrfToken %>"
+    />
+    <meta name="user-data" data-authenticated="false" />
+    <title>Forgot Password - MultiBrick</title>
+    <meta name="og:title" content="Forgot Password - MultiBrick" />
+    <link href="https://www.brick-hill.com/favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/c9a0705161b97f89816f.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <div class="main-holder grid">
+      <notification id="notification-v" class="notification"></notification>
+      <div class="col-1-3 push-1-3">
+        <div class="card">
+          <div class="top red">Forgot Password</div>
+          <div class="content" style="text-align: center">
+            <form
+              method="POST"
+              action="https://www.brick-hill.com/password/forgot"
+            >
+              <input
+                type="hidden"
+                name="_token"
+                value="<%= csrfToken %>"
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+                autofocus
+                style="width: 100%; box-sizing: border-box"
+              />
+              <div style="height: 5px"></div>
+              <button type="submit" class="red">Reset Password</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>

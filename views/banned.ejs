@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-default">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Banned - MultiBrick</title>
+
+    <meta name="theme-color" content="#00A9FE" />
+    <link rel="shortcut icon" href="/images/logos/bh_icon.png" />
+    <meta name="author" content="MultiBrick" />
+    <meta
+      name="description"
+      content="Brick building, brick build together part piece construct make create set."
+    />
+    <meta
+      name="keywords"
+      content="MultiBrick, multibrick, brick building, brick, build together, part, piece, construct, make, create, set"
+    />
+    <meta
+      name="csrf-token"
+      content="<%= csrfToken %>"
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MultiBrick" />
+    <meta property="og:title" content="Banned" />
+    <meta
+      property="og:description"
+      content="Brick building, brick build together part piece construct make create set."
+    />
+    <meta property="og:image" content="/images/logos/bh_icon.png" />
+
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="/css/themes/default.css"
+    />
+    <link rel="stylesheet" href="/css/newtheme.css" />
+    <style>
+      #globalError:empty,
+      .dropdown-content:not(.active) {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <%- navbar %>
+    <dropdown
+      id="dropdown-v"
+      class="dropdown"
+      activator="username-bar"
+      contentclass="logout-dropdown"
+    >
+      <ul>
+        <li>
+          <a onclick="document.getElementById('logout').submit()">Logout</a>
+        </li>
+      </ul>
+      <form
+        method="POST"
+        action="https://www.multi-brick.com/logout"
+        id="logout"
+      >
+        <input
+          type="hidden"
+          name="_token"
+          value="tph7o60jndhXwkcwNYgCi3NmU2vvRY7ahvjyUkqG"
+        />
+      </form>
+    </dropdown>
+
+    <div class="main-holder grid">
+      <%- multibrickMessage %>
+
+      <div class="col-10-12 push-1-12">
+        <div class="alert error" id="globalError"></div>
+      </div>
+
+      <div class="col-10-12 push-1-12">
+        <div class="card">
+          <div class="top red">Your account has been suspended</div>
+          <div class="content">
+            <span class="dark-gray-text sbold"
+              >We have deemed that your account has violated our Terms of
+              Service, and as such a punishment has been applied to your
+              account. Further incompetence or violations to our Terms of
+              Service will result in a termination of your account.</span
+            >
+            <div style="padding-left: 20px; margin-top: 20px">
+              <div class="block" style="margin-bottom: 20px">
+                <b class="dark-gray-text">Ban Length:</b>
+                <span class="light-gray-text"><%= banLength %></span>
+              </div>
+              <div class="block" style="margin-bottom: 20px">
+                <b class="dark-gray-text">Ban Reason:</b>
+                <span class="light-gray-text"><%= bannedReason %></span>
+              </div>
+            </div>
+            <div style="padding-left: 20px; margin-top: 20px">
+              <div class="block" style="margin-bottom: 20px">
+                <b class="dark-gray-text">Moderator Note:</b>
+                <span class="light-gray-text"
+                  ><%= bannedModNote %></span
+                >
+              </div>
+            </div>
+            <span class="dark-gray-text" style="font-size: 16px"
+              >Please make sure that you have read our
+              <a
+                href="/terms"
+                class="darker-gray-text bold"
+                target="_blank"
+                >Terms of Service</a
+              >
+              before returning to make sure you and others have the best
+              experience on MultiBrick.</span
+            >
+            <hr />
+            <div style="margin-bottom: 10px">
+              <% if (bannedCanReactivate) { %>
+              <form action="/banned/reactivate" method="POST">
+                  <input type="hidden" name="_token" value="<%= csrfToken %>">
+                  <button class="blue" type="submit">Reactivate Account</button>
+              </form>
+              <div style="margin-bottom:10px;"></div>
+              <% } else if (banLength != "Terminated") { %>
+              <span class="dark-gray-text">You can reactivate your account on or after <%= banReactivationDate %>.</span>
+              <div style="margin-bottom:10px;"></div>
+              <% } %>
+              <span class="dark-gray-text" style="font-size: 16px"
+                >If you wish to appeal, email us at
+                <a
+                  href="/cdn-cgi/l/email-protection#f594858590949986b597879c969ed89d9c9999db969a"
+                  ><span
+                    class="__cf_email__"
+                    data-cfemail="aacbdadacfcbc6d9eac8d8c3c9c187c2c3c6c684c9c5"
+                    >[email&#160;protected]</span
+                  ></a
+                >.</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div>© <%= year %> MultiBrick . We are not endorsed or affiliated with Mooshimity, Ltd.</div>
+      <a href="/terms">Terms of Service</a>
+      <span>|</span>
+      <a href="/privacy">Privacy Policy</a>
+      <span>|</span>
+      <a href="/staff">Staff</a>
+    </footer>
+
+    <!-- JS -->
+    <script
+      data-cfasync="false"
+      src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
+    <script src="/js/Bundle.js"></script>
+    <script>
+      window._token = "";
+
+      $(() => (window._token = $('meta[name="csrf-token"]').attr("content")));
+
+      $.ajaxSetup({
+        beforeSend: function (xhr, options) {
+          if (options.url.indexOf("http") !== 0) options.url = options.url;
+        },
+      });
+
+      $("[data-dropdown-open]").click(function (event) {
+        var dropdown = $(this).attr("data-dropdown-open");
+        var object = `[data-dropdown="${dropdown}"]`;
+        var opened = $(object).hasClass("active");
+
+        if (!opened) {
+          if (
+            targetMatches(
+              true,
+              event.target,
+              `[data-dropdown-open="${dropdown}"], [data-dropdown-open="${dropdown}"] *`
+            )
+          ) {
+            const self = this;
+
+            $(object)
+              .addClass("active")
+              .css({
+                top: $(self).height() + 30 + "px",
+                left: $(self).offset().left + "px",
+              });
+
+            window.onresize = function () {
+              $(object).css({
+                top: $(self).height() + 30 + "px",
+                left: $(self).offset().left + "px",
+              });
+            };
+          }
+        } else {
+          if (
+            targetMatches(false, event.target, `${dropdown}, ${dropdown} *`)
+          ) {
+            $(object).removeClass("active");
+
+            window.onresize = null;
+          }
+        }
+      });
+
+      function targetMatches(does, eventTarget, target) {
+        if (does)
+          return eventTarget.matches
+            ? eventTarget.matches(target)
+            : eventTarget.msMatchesSelector(target);
+
+        return eventTarget.matches
+          ? !eventTarget.matches(target)
+          : !eventTarget.msMatchesSelector(target);
+      }
+    </script>
+  </body>
+</html>
