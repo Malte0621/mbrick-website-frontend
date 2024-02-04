@@ -101,6 +101,7 @@
                                 }">
                                 <input class="button small smaller-text mr1 green upload-submit" type="submit" value="ALLY" name="ally">
                                 <input class="button small smaller-text red upload-submit" type="submit" value="ENEMY" name="enemy">
+                                <input class="button small smaller-text blue upload-submit" type="submit" value="NEUTRAL" name="neutral">
                             </form>
                         </div>`;
                 }
