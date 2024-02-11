@@ -1560,6 +1560,9 @@ dropdown {
   min-height: 128px;
   position: relative;
 }
+.membership-holder .membership-header.mint {
+  background-color: #3498db;
+}
 .membership-holder .membership-header.ace {
   background-color: #dc0f18;
 }
@@ -1613,6 +1616,9 @@ dropdown {
   cursor: default;
   background: linear-gradient(0deg, #636363 0%, #8b8b8b 100%);
 }
+.membership-buttons .membership-button.mint {
+  background: linear-gradient(0deg, #3498db 0%, #5ab1f0 100%);
+}
 .membership-buttons .membership-button.ace {
   background: linear-gradient(0deg, #dc0f18 0%, #fe292b 100%);
 }
@@ -1630,6 +1636,9 @@ dropdown {
 }
 .membership-buttons .membership-button .membership-average.gray {
   background-color: #535353;
+}
+.membership-buttons .membership-button .membership-average.mint {
+	background-color: #2a7eab
 }
 .membership-buttons .membership-button .membership-average.ace {
   background-color: #a70d13;

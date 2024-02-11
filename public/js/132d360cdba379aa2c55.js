@@ -510,19 +510,19 @@
             " FOLLOW US ",
             -1
           ),
-          o = { href: "https://discord.gg/brick-hill", target: "_blank" },
-          r = { href: "https://twitter.com/hillofbricks", target: "_blank" },
-          h = { href: "https://www.twitch.tv/hillofbricks", target: "_blank" },
+          o = { href: "https://discord.gg/multibrick", target: "_blank" },
+          r = { href: "https://twitter.com/multibrick", target: "_blank" },
+          h = { href: "https://www.twitch.tv/multibrick", target: "_blank" },
           s = {
-            href: "https://www.youtube.com/c/hillofbricks/",
+            href: "https://www.youtube.com/c/multibrick/",
             target: "_blank",
           },
           n = {
-            href: "https://www.instagram.com/hillofbricks/",
+            href: "https://www.instagram.com/multibrick/",
             target: "_blank",
           },
           d = {
-            href: "https://www.tiktok.com/@hillofbricks",
+            href: "https://www.tiktok.com/@multibrick",
             target: "_blank",
           },
           l = { class: "footer-links flex" },

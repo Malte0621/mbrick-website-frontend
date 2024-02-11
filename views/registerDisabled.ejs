@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-<%= theme %>">
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00A9FE" />
+    <meta name="og:image" content="favicon.ico" />
+    <meta name="og:site_name" content="Multi-Brick" />
+    <meta
+      name="og:description"
+      content="A platform built on its community where you can customise your avatar, create and play sets, or just socialise with others!"
+    />
+    <meta
+      name="csrf-token"
+      content="<%= csrfToken %>"
+    />
+    <meta
+      name="user-data"
+      data-authenticated="<% if (userid) { %>true<% } else { %>false<% } %>"
+      <% if (userid) { %>
+      data-id="<%= userid  %>"
+      data-username="<%= username %>"
+      data-membership="<%= membership %>"
+      data-bucks="<%= currency %>"
+      data-bits="<%= currency2 %>"
+      data-tax-rate="<%= taxRate %>"
+      data-admin="<% if (role != 'none') { %>true<% } else { %>false<% } %>"
+      <% } %>
+    />
+    <title>Register - MultiBrick</title>
+    <meta name="og:title" content="Register - MultiBrick" />
+    <link href="favicon.ico" rel="icon" />
+    <link
+      href="https://css.multi-brick.com/<% if (theme == 'dark') { %>c9a0705161b97f89816f.css<% } else { %>f7b9da036e5df9411266.css<% } %>"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://css.multi-brick.com/0ae4afbd7666558dc6c6.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://css.multi-brick.com/fontawsome/releases/v5.6.3/css/all.css"
+      
+      crossorigin="anonymous"
+    />
+    <script src="https://js.multi-brick.com/8c41f6cde2f42898e911.js"></script>
+    <script src="https://js.multi-brick.com/42dace3b7f5030ab9e4f.js"></script>
+    <script src="https://js.multi-brick.com/d8257a0dc2c85177ab9a.js"></script>
+    <script src="https://js.multi-brick.com/132d360cdba379aa2c55.js"></script>
+    <script src="https://js.multi-brick.com/48610a80d359c8f71476.js"></script>
+    <!-- <script src="https://hcaptcha.com/1/api.js" async defer></script> -->
+    <meta name="author" content="MultiBrick" />
+  </head>
+  <body>
+    <%- navbar %>
+    <div class="main-holder grid">
+      <%- multibrickMessage %>
+
+      <notification id="notification-v" class="notification"></notification>
+      <% if (typeof error !== 'undefined') { %>
+        <div class="col-10-12 push-1-12">
+          <div class="alert error">
+            <%= error %>
+          </div>
+        </div>
+      <% } %>
+      <style>
+        h3 {
+          margin: 2px 0;
+        }
+        h6 {
+          margin: 2px 0;
+          font-size: 12px;
+        }
+        input:not([type="radio"]) {
+          display: block;
+          margin-bottom: 5px;
+        }
+        .genders {
+          margin-bottom: 5px;
+        }
+        input[type="radio" i] {
+          margin: 3px 3px 0 0;
+        }
+        label {
+          margin-right: 5px;
+        }
+      </style>
+      <div class="col-10-12 push-1-12">
+        <div class="card">
+          <div class="top blue">Register</div>
+          <div class="content">
+            <span>Account creation is currently disabled.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main-footer id="mainfooter-v"></main-footer>
+  </body>
+</html>
